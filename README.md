@@ -1,4 +1,4 @@
-# tgis
+# terra-gis
 
 ## Project setup
 ```
