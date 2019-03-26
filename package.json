@@ -7,14 +7,32 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "postinstall": "npm run build",
+    "start": "node server.js"
   },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/firvain/vlayers.git"
+  },
+  "author": {
+    "name": "Evangelos Tsipis",
+    "email": "etsipis@terracognita.eu"
+  },
+  "homepage": "https://vlayers.herokuapp.com/",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "express": "^4.16.4",
+    "serve-static": "^1.13.2",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
+    "vuelayers": "^0.11.4",
+    "vuetify": "^1.5.5",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@mdi/font": "^3.5.95",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-e2e-cypress": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
@@ -30,6 +48,15 @@
     "fibers": "^3.1.1",
     "sass": "^1.17.2",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.5.21"
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "vue-cli-plugin-vuetify": "^0.5.0",
+    "vue-template-compiler": "^2.5.21",
+    "vuetify-loader": "^1.0.5"
+  },
+  "engines": {
+    "node": "10.15.3",
+    "npm": "6.4.1",
+    "yarn": "1.15.2"
   }
 }

@@ -1,0 +1,67 @@
+<template>
+  <v-container fluid fill-height pa-0>
+    <v-layout row wrap>
+      <v-flex>
+        <v-radio-group ref="drawTypeRadioPicker" row v-model="radioGroup">
+          <v-radio
+            v-for="item in radioGroupItems"
+            :key="item.id"
+            :label="item.label"
+            :value="item.value"
+          ></v-radio>
+        </v-radio-group>
+      </v-flex>
+    </v-layout>
+  </v-container>
+</template>
+<script>
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
+export default {
+  name: "drawtool",
+  data() {
+    return {
+      radioGroupItems: [
+        {
+          id: 1,
+          label: "Point",
+          value: "Point"
+        },
+        {
+          id: 2,
+          label: "LineString",
+          value: "LineString"
+        },
+        {
+          id: 3,
+          label: "Polygon",
+          value: "Polygon"
+        }
+      ]
+    };
+  },
+  computed: {
+    ...mapGetters("OpenLMAP", ["appStatus", "drawType"]),
+    radioGroup: {
+      get: function() {
+        return this.drawType;
+      },
+      set: function(newValue) {
+        this.updateDrawType(newValue);
+      }
+    }
+  },
+  methods: {
+    ...mapActions("OpenLMAP", ["updateAppStatus", "updateDrawType"])
+  },
+  watch: {
+    // appStatus(value) {
+    //   if (value === "draw") {
+    //     this.columns = 4;
+    //   } else {
+    //     this.columns = 1;
+    //   }
+    // }
+  }
+};
+</script>
