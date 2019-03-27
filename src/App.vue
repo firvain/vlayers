@@ -4,11 +4,11 @@
       <v-navigation-drawer v-model="drawer" app :width="400" sm-and-down>
         <LayersTree></LayersTree>
       </v-navigation-drawer>
-      <v-toolbar color="indigo" dark fixed app>
+      <v-toolbar color="primary" dark fixed app>
         <v-toolbar-side-icon
           @click.stop="drawer = !drawer"
         ></v-toolbar-side-icon>
-        <v-toolbar-title>Application</v-toolbar-title>
+        <v-toolbar-title>Terra Gis</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
           <v-btn flat to="/"><v-icon>mdi-home</v-icon></v-btn>
@@ -19,8 +19,8 @@
       <v-content>
         <router-view></router-view>
       </v-content>
-      <v-footer color="indigo" app>
-        <span class="white--text">&copy; 2017</span>
+      <v-footer color="primary" dark app>
+        <span class="white--text">&copy; Terra Cognita 2019</span>
       </v-footer>
     </v-app>
   </div>
@@ -38,6 +38,9 @@ export default {
     return {
       drawer: false
     };
+  },
+  mounted() {
+    console.log(this.$router.path);
   }
 };
 </script>

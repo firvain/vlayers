@@ -2,7 +2,7 @@
   <v-layout v-if="this.$route.name === 'map'" pa-3>
     <v-flex>
       <v-card class="mx-auto" max-width="500">
-        <v-sheet class="pa-3 primary lighten-2">
+        <v-sheet class="pa-3 secondary">
           <v-text-field
             v-model="search"
             label="Search Layer List"
@@ -28,15 +28,15 @@
             :filter="filter"
             :open.sync="open"
             activatable
-            active-class="grey lighten-4 indigo--text"
-            selected-color="indigo"
+            active-class="accent lighten-4 accent--text"
+            selected-color="accent"
             open-on-click
             :open-all="true"
           >
             <template v-slot:prepend="{ item, active }">
               <v-icon
                 v-if="!item.children"
-                :color="active ? 'indigo' : ''"
+                :color="active ? 'accent' : ''"
                 v-text="
                   `mdi-${
                     item.visible === true ? 'eye-outline' : 'eye-off-outline'

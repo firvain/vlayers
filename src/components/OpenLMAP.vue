@@ -9,7 +9,7 @@
           ref="map"
           :load-tiles-while-animating="true"
           :load-tiles-while-interacting="true"
-          style="height:600px;width:100%"
+          style="height:800px;width:100%"
           @mounted="onMapMounted"
         >
           <vl-view
