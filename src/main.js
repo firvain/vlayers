@@ -1,12 +1,10 @@
 import "babel-polyfill";
 import Vue from "vue";
 import "./plugins/vuetify";
+import "./plugins/vuelayers";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store/index.js";
-import VueLayers from "vuelayers";
-
-Vue.use(VueLayers);
 
 Vue.config.productionTip = false;
 
