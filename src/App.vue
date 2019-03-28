@@ -2,7 +2,7 @@
   <div id="app">
     <v-app id="GisApp">
       <v-navigation-drawer v-model="drawer" app :width="400" sm-and-down>
-        <!-- <LayersTree></LayersTree> -->
+        <LayersTree></LayersTree>
       </v-navigation-drawer>
       <v-toolbar color="primary" dark fixed app>
         <v-toolbar-side-icon
@@ -27,12 +27,12 @@
 </template>
 
 <script>
-// import LayersTree from "@/components/LayersTree.vue";
+import LayersTree from "@/components/LayersTree.vue";
 
 export default {
   name: "App",
   components: {
-    // LayersTree
+    LayersTree
   },
   data() {
     return {
@@ -40,7 +40,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$router.path);
   }
 };
 </script>

@@ -24,6 +24,7 @@
           <v-treeview
             :active.sync="active"
             :items="mapLayers"
+            item-text="title"
             :search="search"
             :filter="filter"
             :open.sync="open"
@@ -71,24 +72,39 @@ export default {
         : undefined;
     },
     mapLayers() {
-      let arr = Object.keys(this.baseLayers).map(k => this.baseLayers[k]);
-      return arr;
+      let treeLayers = [
+        {
+          id: 1,
+          title: "Base Layers",
+          children: Object.keys(this.baseLayers).map(k => {
+            let original = this.baseLayers[k];
+            let id = k;
+            let target = { id, ...original };
+            return target;
+          })
+        },
+        {
+          id: 2,
+          title: "Vector Layers",
+          children: Object.keys(this.layers).map(k => {
+            let original = this.layers[k];
+            let id = k;
+            let target = { id, ...original };
+            return target;
+          })
+        }
+      ];
+      return treeLayers;
     }
   },
   methods: {
     ...mapActions("OpenLMAP", ["updateVisibility"]),
     changeVisibility({ id, visible }) {
-      if (visible) {
-        this.updateVisibility({
-          id: id,
-          prop: "visible",
-          value: false
-        });
-      } else {
-        this.updateVisibility({
-          id: id,
-          value: true
-        });
+      if (this.baseLayers[id] != null) {
+        this.updateVisibility({ id, value: !visible });
+      }
+      if (this.layers[id] != null) {
+        this.updateVisibility({ id, value: !visible });
       }
     }
   },

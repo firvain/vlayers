@@ -1,39 +1,39 @@
 import { loadingBBox } from "vuelayers/lib/ol-ext";
 
-const findNested = (obj, key, value) => {
-  // console.log(obj);
-  // Base case
-  if (obj[key] === value) {
-    return obj;
-  } else if (obj.children) {
-    for (let i = 0, len = Object.keys(obj.children).length; i < len; i++) {
-      //TODO better logic
-      if (typeof obj.children[i] == "object") {
-        // console.log(this);
-        let found = findNested(obj.children[i], key, value);
-        if (found) {
-          // If the object was found in the recursive call, bubble it up.
-          return found;
-        }
-      }
-    }
-  }
-};
+// const findNested = (obj, key, value) => {
+//   // console.log(obj);
+//   // Base case
+//   if (obj[key] === value) {
+//     return obj;
+//   } else if (obj.children) {
+//     for (let i = 0, len = Object.keys(obj.children).length; i < len; i++) {
+//       //TODO better logic
+//       if (typeof obj.children[i] == "object") {
+//         // console.log(this);
+//         let found = findNested(obj.children[i], key, value);
+//         if (found) {
+//           // If the object was found in the recursive call, bubble it up.
+//           return found;
+//         }
+//       }
+//     }
+//   }
+// };
 
 const state = {
-  baseLayersList: [1, 2, 3],
+  baseLayersList: [100, 101, 102],
   baseLayers: {
-    1: {
+    100: {
       name: "osm",
       title: "OpenStreetMap",
       visible: true
     },
-    2: {
+    101: {
       name: "sputnik",
       title: "Sputnik Maps",
       visible: false
     },
-    3: {
+    102: {
       name: "bingmaps",
       title: "Bing Maps",
       apiKey:
@@ -42,7 +42,7 @@ const state = {
       visible: false
     }
   },
-  layersList: [5, 6],
+  layersList: [200, 201],
   layers: {
     // Tile layer with WMS source
     // 4: {
@@ -59,7 +59,7 @@ const state = {
     //     serverType: "geoserver"
     //   }
     // },
-    5: {
+    200: {
       title: "Natura 2000",
       cmp: "vl-layer-vector",
       visible: true,
@@ -95,13 +95,13 @@ const state = {
         }
       ]
     },
-    6: {
+    201: {
       title: "Countries",
       cmp: "vl-layer-vector",
       visible: true,
-      projection: "EPSG:3857",
       source: {
         cmp: "vl-source-vector",
+        projection: "EPSG:4326",
         url:
           "https://openlayers.org/en/latest/examples/data/geojson/countries.geojson"
       },
@@ -113,8 +113,8 @@ const state = {
               color: [255, 255, 255, 0.5]
             },
             "vl-style-stroke": {
-              color: "red",
-              width: 4
+              color: "#219e46",
+              width: 2
             },
             "vl-style-text": {
               text: "\uf041",
@@ -130,6 +130,11 @@ const state = {
         }
       ]
     }
+  },
+  utilityLayersList: [1000, 1001],
+  utilityLayers: {
+    100: {},
+    101: {}
   },
   appStatus: "display",
   mapCenter: [21.78896, 40.30069],
@@ -172,8 +177,23 @@ const actions = {
     commit("UPDATE_MAP_CENTER", payload);
   },
   updateVisibility({ commit }, { id, value }) {
-    const item = findNested(state.layers[0], "id", id);
-    commit("UPDATE_LAYER_VISIBILITY", { item, value });
+    let item;
+    if (state.baseLayersList.includes(parseInt(id))) {
+      /* first find and change Clicked Base Layer Visibility */
+      item = state.baseLayers[id];
+      commit("UPDATE_LAYER_VISIBILITY", { item, value });
+      /* then find and change other Base Layers Visibility*/
+      Object.keys(state.baseLayers).forEach(i => {
+        if (i !== id) {
+          item = state.baseLayers[i];
+          let value = false; //! mutation is BAD!!!
+          commit("UPDATE_LAYER_VISIBILITY", { item, value });
+        }
+      });
+    } else if (!state.baseLayersList.includes(parseInt(id))) {
+      item = state.layers[id];
+      commit("UPDATE_LAYER_VISIBILITY", { item, value });
+    }
   },
   updateAppStatus({ commit }, payload) {
     commit("UPDATE_APP_STATUS", payload);
