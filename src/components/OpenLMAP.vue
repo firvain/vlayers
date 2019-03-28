@@ -20,26 +20,99 @@
 
           <!-- Base layers -->
           <vl-layer-tile
-            v-if="hasLayer(this.layers, 'OpenStreetMap')"
-            :visible="
-              findNested(this.layers[0], 'name', 'OpenStreetMap').visible
-            "
+            v-for="(layer, key) in baseLayers"
+            :key="key"
+            :id="key"
+            :visible="layer.visible"
           >
-            <vl-source-osm></vl-source-osm>
+            <component
+              :is="'vl-source-' + layer.name"
+              v-bind="layer"
+            ></component>
           </vl-layer-tile>
-          <vl-layer-tile
-            v-if="hasLayer(this.layers, 'Bingmaps')"
-            :visible="findNested(this.layers[0], 'name', 'Bingmaps').visible"
+
+          <!-- other layers from config -->
+          <component
+            v-for="(layer, key) in layers"
+            :is="layer.cmp"
+            v-if="layer.visible"
+            :key="key"
+            :id="key"
+            v-bind="layer"
           >
-            <vl-source-bingmaps
-              :api-key="
-                findNested(this.layers[0], 'name', 'Bingmaps')['api-key']
-              "
-              :imagery-set="
-                findNested(this.layers[0], 'name', 'Bingmaps')['imagery-set']
-              "
-            ></vl-source-bingmaps>
-          </vl-layer-tile>
+            <!-- add vl-source-* -->
+            <component :is="layer.source.cmp" v-bind="layer.source">
+              <!-- add static features to vl-source-vector if provided -->
+              <vl-feature
+                v-if="
+                  layer.source.staticFeatures &&
+                    layer.source.staticFeatures.length
+                "
+                v-for="feature in layer.source.staticFeatures"
+                :key="feature.id"
+                :id="feature.id"
+                :properties="feature.properties"
+              >
+                <component
+                  :is="geometryTypeToCmpName(feature.geometry.type)"
+                  v-bind="feature.geometry"
+                ></component>
+              </vl-feature>
+
+              <!-- add inner source if provided (like vl-source-vector inside vl-source-cluster) -->
+              <component
+                v-if="layer.source.source"
+                :is="layer.source.source.cmp"
+                v-bind="layer.source.source"
+              >
+                <!-- add static features to vl-source-vector if provided -->
+                <vl-feature
+                  v-if="
+                    layer.source.source.staticFeatures &&
+                      layer.source.source.staticFeatures.length
+                  "
+                  v-for="feature in layer.source.source.staticFeatures"
+                  :key="feature.id"
+                  :id="feature.id"
+                  :properties="feature.properties"
+                >
+                  <component
+                    :is="geometryTypeToCmpName(feature.geometry.type)"
+                    v-bind="feature.geometry"
+                  ></component>
+                </vl-feature>
+              </component>
+            </component>
+            <!--// vl-source-* -->
+
+            <!-- add style components if provided -->
+            <!-- create vl-style-box or vl-style-func -->
+            <component
+              v-if="layer.style"
+              v-for="(style, i) in layer.style"
+              :key="i"
+              :is="style.cmp"
+              v-bind="style"
+            >
+              <!-- create inner style components: vl-style-circle, vl-style-icon, vl-style-fill, vl-style-stroke & etc -->
+              <component
+                v-if="style.styles"
+                v-for="(st, cmp) in style.styles"
+                :key="cmp"
+                :is="cmp"
+                v-bind="st"
+              >
+                <!-- vl-style-fill, vl-style-stroke if provided -->
+                <vl-style-fill v-if="st.fill" v-bind="st.fill"></vl-style-fill>
+                <vl-style-stroke
+                  v-if="st.stroke"
+                  v-bind="st.stroke"
+                ></vl-style-stroke>
+              </component>
+            </component>
+            <!--// style -->
+          </component>
+          <!--// other layers -->
           <!-- drawing layer -->
           <vl-layer-vector id="draw-pane" v-if="appStatus === 'draw'">
             <vl-source-vector
@@ -129,7 +202,7 @@ export default {
   },
   data() {
     return {
-      zoom: 16,
+      zoom: 5,
       rotation: 0,
       drawnFeatures: [],
       measureFeatures: [],
@@ -137,7 +210,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("OpenLMAP", ["mapCenter", "layers", "appStatus", "drawType"]),
+    ...mapGetters("OpenLMAP", [
+      "mapCenter",
+      "layers",
+      "appStatus",
+      "drawType",
+      "baseLayers"
+    ]),
     centerInProjection: {
       get: function() {
         return fromLonLat(this.mapCenter);

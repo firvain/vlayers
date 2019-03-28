@@ -23,7 +23,7 @@
         <v-card-text>
           <v-treeview
             :active.sync="active"
-            :items="layers"
+            :items="mapLayers"
             :search="search"
             :filter="filter"
             :open.sync="open"
@@ -64,11 +64,15 @@ export default {
     active: []
   }),
   computed: {
-    ...mapGetters("OpenLMAP", ["layers"]),
+    ...mapGetters("OpenLMAP", ["layers", "baseLayers"]),
     filter() {
       return this.caseSensitive
         ? (item, search, textKey) => item[textKey].indexOf(search) > -1
         : undefined;
+    },
+    mapLayers() {
+      let arr = Object.keys(this.baseLayers).map(k => this.baseLayers[k]);
+      return arr;
     }
   },
   methods: {
@@ -91,12 +95,6 @@ export default {
   mounted() {
     // console.log(this.$route);
   },
-  watch: {
-    active(val) {
-      if (val.length) {
-        console.log(val);
-      }
-    }
-  }
+  watch: {}
 };
 </script>
