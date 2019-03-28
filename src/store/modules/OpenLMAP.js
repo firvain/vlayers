@@ -69,7 +69,7 @@ const state = {
         features: [],
         url(extent, resolution, projection) {
           return (
-            "http://geodata.gov.gr/geoserver/ows?service=WFS&" +
+            "https://geodata.gov.gr/geoserver/ows?service=WFS&" +
             "&request=GetFeature&version=2.0.0" +
             "&outputFormat=json&srsName=" +
             projection +
