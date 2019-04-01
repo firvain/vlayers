@@ -18,7 +18,7 @@
             :rotation.sync="rotation"
           ></vl-view>
 
-          <!-- Base layers -->
+          <!-- Base layers from Vuex-->
           <vl-layer-tile
             v-for="(layer, key) in baseLayers"
             :key="key"
@@ -30,8 +30,8 @@
               v-bind="layer"
             ></component>
           </vl-layer-tile>
-
-          <!-- other layers from config -->
+          <!--// Base layers from Vuex-->
+          <!-- other layers from Vuex -->
           <component
             v-for="(layer, key) in layers"
             :is="layer.cmp"
@@ -112,71 +112,60 @@
             </component>
             <!--// style -->
           </component>
-          <!--// other layers -->
-          <!-- drawing layer -->
-          <vl-layer-vector id="draw-pane" v-if="appStatus === 'draw'">
-            <vl-source-vector
-              ident="draw-target"
+          <!--// other layers from Vuex-->
+
+          <!-- Drawing Layers -->
+          <component
+            v-for="(layer, key) in utilityLayers"
+            :is="layer.cmp"
+            v-if="
+              layer.visible && (appStatus === 'draw' || appStatus === 'measure')
+            "
+            :key="key"
+            :id="layer.id"
+            v-bind="layer"
+          >
+            <component
+              :is="layer.source.cmp"
+              v-bind="layer.source"
+              :ident="layer.id"
               :features.sync="drawnFeatures"
             >
-              <vl-style-box>
-                <vl-style-stroke color="red" :width="3"></vl-style-stroke>
-                <vl-style-fill color="rgba(255,255,255,0.5)"></vl-style-fill>
-                <vl-style-circle>
-                  <vl-style-stroke color="red" :width="3"></vl-style-stroke>
-                  <vl-style-fill color="rgba(255,255,255,0.5)"></vl-style-fill>
-                </vl-style-circle>
-              </vl-style-box>
-            </vl-source-vector>
-          </vl-layer-vector>
-          <vl-layer-vector
-            id="measure-draw-pane"
-            v-if="appStatus === 'measure'"
-          >
-            <vl-source-vector
-              ident="measure-draw-target"
-              :features.sync="measureFeatures"
+            </component>
+            <component
+              v-if="layer.style"
+              v-for="(style, i) in layer.style"
+              :key="i"
+              :is="style.cmp"
+              v-bind="style"
             >
-              <vl-style-box>
-                <vl-style-stroke color="#ffcc33" :width="2"></vl-style-stroke>
-                <vl-style-fill color="rgba(255, 255, 255, 0.2)"></vl-style-fill>
-                <vl-style-circle :radius="7">
-                  <vl-style-fill color="#ffcc33"></vl-style-fill>
-                </vl-style-circle>
-              </vl-style-box>
-            </vl-source-vector>
-          </vl-layer-vector>
+              <!-- create inner style components: vl-style-circle, vl-style-icon, vl-style-fill, vl-style-stroke & etc -->
+              <component
+                v-if="style.styles"
+                v-for="(st, cmp) in style.styles"
+                :key="cmp"
+                :is="cmp"
+                v-bind="st"
+              >
+                <!-- vl-style-fill, vl-style-stroke if provided -->
+                <vl-style-fill v-if="st.fill" v-bind="st.fill"></vl-style-fill>
+                <vl-style-stroke
+                  v-if="st.stroke"
+                  v-bind="st.stroke"
+                ></vl-style-stroke>
+              </component>
+            </component>
+          </component>
+          <!--// Drawing Layers -->
           <!-- Interactions -->
           <vl-interaction-draw
-            v-if="appStatus === 'draw' && drawType"
+            v-if="(appStatus === 'draw' || appStatus === 'measure') && drawType"
             source="draw-target"
             :type="drawType"
-          ></vl-interaction-draw>
-
-          <vl-interaction-draw
-            ref="measure"
-            @drawstart="measureDrawStart"
-            v-if="appStatus === 'measure'"
-            source="measure-draw-target"
-            :type="drawType"
             :stopClick="true"
-          >
-            <vl-style-box>
-              <vl-style-stroke
-                color="rgba(0, 0, 0)"
-                :width="4"
-                :lineDash="[10, 10]"
-              ></vl-style-stroke>
-              <vl-style-fill color="rgba(255, 255, 255, 0.2)"></vl-style-fill>
-              <vl-style-circle :radius="5">
-                <vl-style-stroke
-                  color="rgba(0, 0, 0)"
-                  :width="2"
-                ></vl-style-stroke>
-                <vl-style-fill color="rgba(0, 0, 0)"></vl-style-fill>
-              </vl-style-circle>
-            </vl-style-box>
-          </vl-interaction-draw>
+            @drawstart="measureDrawStart"
+          ></vl-interaction-draw>
+          <!--// Interactions-->
         </vl-map>
       </v-flex>
     </v-layout>
@@ -185,8 +174,6 @@
 <script>
 import MapTools from "@/components/MapTools";
 import { mapGetters } from "vuex";
-import { mapActions } from "vuex";
-
 import { fromLonLat } from "ol/proj";
 import { getArea, getLength } from "ol/sphere.js";
 import { Polygon } from "ol/geom.js";
@@ -212,10 +199,11 @@ export default {
   computed: {
     ...mapGetters("OpenLMAP", [
       "mapCenter",
-      "layers",
       "appStatus",
       "drawType",
-      "baseLayers"
+      "baseLayers",
+      "layers",
+      "utilityLayers"
     ]),
     centerInProjection: {
       get: function() {
@@ -227,33 +215,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions("OpenLMAP", ["updateDrawType"]),
-    hasLayer(data, value) {
-      return data.some(e => {
-        if (e.name == value) return e;
-        else if (e.children) {
-          return this.hasLayer(e.children, value);
-        }
-      });
-    },
-    findNested(obj, key, value) {
-      // console.log(Object.keys(obj));
-      // Base case
-      if (obj[key] === value) {
-        return obj;
-      } else if (obj.children) {
-        for (let i = 0, len = Object.keys(obj.children).length; i < len; i++) {
-          //TODO better logic
-          if (typeof obj.children[i] == "object") {
-            let found = this.findNested(obj.children[i], key, value);
-            if (found) {
-              // If the object was found in the recursive call, bubble it up.
-              return found;
-            }
-          }
-        }
-      }
-    },
     formatLength(line) {
       const length = getLength(line);
       let output;
@@ -287,6 +248,8 @@ export default {
       ]);
     },
     measureDrawStart(evt) {
+      if (this.appStatus === "draw") return;
+
       let sketch = evt.feature;
       sketch.getGeometry().on("change", evt => {
         let geom = evt.target;
@@ -297,27 +260,9 @@ export default {
         }
       });
     },
-    cancel(value) {
-      if (value === "draw") {
-        this.drawnFeatures = [];
-      } else if (value === "measure") {
-        this.measureFeatures = [];
-      }
-
-      return null;
+    cancel() {
+      this.drawnFeatures = [];
     }
-  },
-  mounted() {},
-  watch: {
-    // appStatus: function() {
-    //   if (this.appStatus === "measure") {
-    //     this.$nextTick().then(() => {
-    //       console.log(this.$refs.measure);
-    //       console.log(this.$refs.measure.active);
-    //     });
-    //   }
-    // },
-    // immediate: true
   }
 };
 </script>

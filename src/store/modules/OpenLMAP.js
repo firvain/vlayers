@@ -133,8 +133,36 @@ const state = {
   },
   utilityLayersList: [1000, 1001],
   utilityLayers: {
-    100: {},
-    101: {}
+    1000: {
+      id: "draw-target",
+      title: "Draw",
+      cmp: "vl-layer-vector",
+      visible: true,
+      source: {
+        cmp: "vl-source-vector"
+      },
+      style: [
+        {
+          cmp: "vl-style-box",
+          styles: {
+            "vl-style-fill": {
+              color: [255, 255, 255, 0.5]
+            },
+            "vl-style-stroke": {
+              color: "red",
+              width: 3
+            },
+            "vl-style-circle": {
+              radius: 3,
+              stroke: {
+                width: 1.5,
+                color: "red"
+              }
+            }
+          }
+        }
+      ]
+    }
   },
   appStatus: "display",
   mapCenter: [21.78896, 40.30069],
@@ -150,7 +178,9 @@ const getters = {
   baseLayersList: state => state.baseLayersList,
   baseLayers: state => state.baseLayers,
   layersList: state => state.layersList,
-  layers: state => state.layers
+  layers: state => state.layers,
+  utilityLayersList: state => state.utilityLayersList,
+  utilityLayers: state => state.utilityLayers
 };
 const mutations = {
   UPDATE_APP_STATUS(state, payload) {

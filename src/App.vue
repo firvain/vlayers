@@ -39,7 +39,6 @@ export default {
       drawer: false
     };
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
