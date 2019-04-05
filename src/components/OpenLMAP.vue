@@ -2,7 +2,14 @@
   <v-container grid-list-md fluid pa-1 ma-0 fill-height>
     <v-layout row wrap justify-center align-center>
       <v-flex xs12>
-        <MapTools :output="measureOutput" @cancel="cancel"></MapTools>
+        <v-container grid-list-md fluid pa-1 ma-0 fill-height>
+          <v-layout row wrap justify-center align-center>
+            <v-flex xs12>
+              <MapTools :output="measureOutput" @cancel="cancel"></MapTools>
+            </v-flex>
+            <v-flex><featureInfo></featureInfo> </v-flex>
+          </v-layout>
+        </v-container>
       </v-flex>
       <v-flex xs12>
         <vl-map
@@ -197,6 +204,7 @@
 </template>
 <script>
 import MapTools from "@/components/MapTools";
+import featureInfo from "@/components/featureInfo.vue";
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 import { fromLonLat } from "ol/proj";
@@ -210,7 +218,8 @@ import ZoomSlider from "ol/control/ZoomSlider";
 export default {
   name: "OpenLMAP",
   components: {
-    MapTools
+    MapTools,
+    featureInfo
   },
   data() {
     return {
