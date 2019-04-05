@@ -5,7 +5,7 @@
         <v-sheet class="pa-3 secondary">
           <v-text-field
             v-model="search"
-            label="Search Layer List"
+            :label="$t('map.treeview.search')"
             dark
             flat
             solo-inverted
@@ -17,7 +17,7 @@
             v-model="caseSensitive"
             dark
             hide-details
-            label="Case sensitive search"
+            :label="$t('map.treeview.sensitive')"
           ></v-checkbox>
         </v-sheet>
         <v-card-text>

@@ -9986,6 +9986,11 @@ vuetify@^1.5.5:
   resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.5.9.tgz#58db8af20cc2a4d226125e430ca5217d8056555b"
   integrity sha512-Jg8Ocuk6QDiins7lV3uFB6TaEm3ePspcKIyA/XcxR5/Uwd48f4n1uUOlW9H/XBgbvy+4yHW/KWJWG9oI0ZrmzA==
 
+vuex-i18n@^1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/vuex-i18n/-/vuex-i18n-1.11.0.tgz#e6cdc95080c445ab2c211cc6b64a907d217639d3"
+  integrity sha512-+Eme0C7FS3VFLIWpAwisohC3KcRDw+YcXFANssUZZq16P2C4z8V2VGbEtFHFw0DzkvZcdM2CAkUj6rdMl9wYmg==
+
 vuex@^3.0.1:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.1.0.tgz#634b81515cf0cfe976bd1ffe9601755e51f843b9"
