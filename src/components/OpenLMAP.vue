@@ -1,10 +1,10 @@
 <template>
-  <v-container grid-list-md fluid pa-1 ma-0>
+  <v-container grid-list-md fluid pa-1 ma-0 fill-height>
     <v-layout row wrap justify-center align-center>
       <v-flex xs12>
         <MapTools :output="measureOutput" @cancel="cancel"></MapTools>
       </v-flex>
-      <v-flex>
+      <v-flex xs12>
         <vl-map
           ref="map"
           :load-tiles-while-animating="true"

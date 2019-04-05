@@ -201,6 +201,7 @@ const state = {
       ]
     }
   },
+  sidebar: false,
   appStatus: "display",
   mapCenter: [21.78896, 40.30069],
   drawType: undefined,
@@ -221,7 +222,8 @@ const getters = {
   utilityLayersList: state => state.utilityLayersList,
   utilityLayers: state => state.utilityLayers,
   selectedFeature: state => state.selectedFeature,
-  activeTreeItem: state => state.activeTreeItem
+  activeTreeItem: state => state.activeTreeItem,
+  sidebar: state => state.sidebar
 };
 const mutations = {
   UPDATE_APP_STATUS(state, payload) {
@@ -247,6 +249,9 @@ const mutations = {
   },
   UPDATE_ACTIVE_TREE_ITEM (state, payload) {
     state.activeTreeItem = payload;
+  },
+  UPDATE_SIDEBAR (state, payload) {
+    state.sidebar = payload;
   }
 };
 const actions = {
@@ -267,6 +272,7 @@ const actions = {
           commit("UPDATE_LAYER_VISIBILITY", { item, value });
         }
       });
+      /* handle other layers */
     } else if (!state.baseLayersList.includes(parseInt(id))) {
       item = state.layers[id];
       commit("UPDATE_LAYER_VISIBILITY", { item, value });
@@ -286,6 +292,9 @@ const actions = {
   },
   updateActiveTreeItem({ commit }, payload) {
     commit("UPDATE_ACTIVE_TREE_ITEM", payload)
+  },
+  updateSidebar({ commit }, payload) {
+    commit("UPDATE_SIDEBAR", payload)
   }
 };
 

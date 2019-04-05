@@ -75,7 +75,6 @@ export default {
         return this.activeTreeItem;
       },
       set: function(v) {
-        alert(v);
         this.updateActiveTreeItem(v);
       }
     },
@@ -116,9 +115,7 @@ export default {
       }
     }
   },
-  mounted() {
-    // console.log(this.$route);
-  },
+  mounted() {},
   watch: {}
 };
 </script>

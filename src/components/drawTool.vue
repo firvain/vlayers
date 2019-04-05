@@ -1,18 +1,14 @@
 <template>
-  <v-container fluid fill-height pa-0>
-    <v-layout row wrap>
-      <v-flex>
-        <v-radio-group ref="drawTypeRadioPicker" row v-model="radioGroup">
-          <v-radio
-            v-for="item in radioGroupItems"
-            :key="item.id"
-            :label="item.label"
-            :value="item.value"
-          ></v-radio>
-        </v-radio-group>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <v-flex>
+    <v-radio-group ref="drawTypeRadioPicker" row v-model="radioGroup">
+      <v-radio
+        v-for="item in radioGroupItems"
+        :key="item.id"
+        :label="item.label"
+        :value="item.value"
+      ></v-radio>
+    </v-radio-group>
+  </v-flex>
 </template>
 <script>
 import { mapGetters } from "vuex";

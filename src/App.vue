@@ -29,6 +29,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import LayersTree from "@/components/LayersTree.vue";
 import featureInfo from "@/components/featureInfo.vue";
 
@@ -39,13 +40,21 @@ export default {
     featureInfo
   },
   data() {
-    return {
-      drawer: false
-    };
+    return {};
   },
   computed: {
-    ...mapGetters("OpenLMAP", ["appStatus"])
+    ...mapGetters("OpenLMAP", ["appStatus", "sidebar"]),
+    drawer: {
+      get() {
+        return this.sidebar;
+      },
+      set(value) {
+        this.updateSidebar(value);
+      }
+    }
   },
-  methods: {}
+  methods: {
+    ...mapActions("OpenLMAP", ["updateSidebar"])
+  }
 };
 </script>

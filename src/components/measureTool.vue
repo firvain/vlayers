@@ -1,15 +1,17 @@
 <template>
-  <v-container fluid fill-height pa-0>
-    <v-layout row wrap align-center>
-      <v-flex>
-        <v-radio-group ref="measureTypeRadioPicker" row v-model="radioGroup">
-          <v-radio label="LineString" value="LineString"></v-radio>
-          <v-radio label="Polygon" value="Polygon"></v-radio>
-        </v-radio-group>
-      </v-flex>
-      <v-flex>{{ output }}</v-flex>
-    </v-layout>
-  </v-container>
+  <v-flex shrink>
+    <v-container fluid fill-height pa-0 text-xs-center>
+      <v-layout row wrap justify-center align-center>
+        <v-flex>
+          <v-radio-group ref="measureTypeRadioPicker" row v-model="radioGroup">
+            <v-radio label="LineString" value="LineString"></v-radio>
+            <v-radio label="Polygon" value="Polygon"></v-radio>
+          </v-radio-group>
+        </v-flex>
+        <v-flex>{{ output }}</v-flex>
+      </v-layout></v-container
+    >
+  </v-flex>
 </template>
 <script>
 import { mapGetters } from "vuex";

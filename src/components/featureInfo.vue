@@ -1,27 +1,36 @@
 <template>
   <v-container v-if="this.selectedFeature.length !== 0" fluid grid-list-lg>
-    <v-layout row wrap>
-      <v-flex xs12 v-for="(feature, key) in this.selectedFeature" :key="key">
-        <v-card :color="pickRandomProperty($vuetify.theme)">
-          <v-list dense>
-            <v-list-tile
-              v-for="(featureValue, feaureKey) in feature"
-              :key="feaureKey"
-              color="white"
-            >
-              <v-list-tile-action>
-                <v-icon small color="white">mdi-record</v-icon>
-              </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title
-                  v-text="feaureKey + ' : ' + featureValue"
-                ></v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </v-list>
-        </v-card>
-      </v-flex>
-    </v-layout>
+    <v-card elevation="12">
+      <v-card-title primary-title class="justify-center ">
+        <h3 class="headline mb-0 font-weight-bold text-uppercase">results</h3>
+        <v-layout row wrap>
+          <v-flex
+            xs12
+            v-for="(feature, key) in this.selectedFeature"
+            :key="key"
+          >
+            <v-card :color="pickRandomProperty($vuetify.theme)">
+              <v-list dense>
+                <v-list-tile
+                  v-for="(featureValue, feaureKey) in feature"
+                  :key="feaureKey"
+                  color="white"
+                >
+                  <v-list-tile-action>
+                    <v-icon small color="white">mdi-record</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-content>
+                    <v-list-tile-title
+                      v-text="feaureKey + ' : ' + featureValue"
+                    ></v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+              </v-list>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-card-title>
+    </v-card>
   </v-container>
 </template>
 <script>
