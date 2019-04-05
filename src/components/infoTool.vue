@@ -1,8 +1,11 @@
 <template>
-  <v-container fluid fill-height pa-0>
-    <v-layout row wrap>
-      <v-flex class="text-xs-center">
-        INFO
+  <v-container pa-0 text-xs-left>
+    <v-layout row wrap align-center>
+      <v-flex shrink>
+        INFORMATION
+      </v-flex>
+      <v-flex shrink>
+        <v-switch v-model="switch1" label="Multi"></v-switch>
       </v-flex>
     </v-layout>
   </v-container>
@@ -14,16 +17,15 @@ import { mapActions } from "vuex";
 export default {
   name: "infotool",
   data() {
-    return {};
+    return {
+      switch1: true
+    };
   },
   computed: {
     ...mapGetters("OpenLMAP", ["appStatus"])
   },
   methods: {
-    ...mapActions("OpenLMAP", ["updateAppStatus"]),
-    toolAction(value) {
-      this.updateAppStatus(value);
-    }
+    ...mapActions("OpenLMAP", ["updateAppStatus"])
   }
 };
 </script>

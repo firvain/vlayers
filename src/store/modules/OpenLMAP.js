@@ -42,7 +42,7 @@ const state = {
       visible: false
     }
   },
-  layersList: [200, 201],
+  layersList: [200, 201, 202],
   layers: {
     // Tile layer with WMS source
     // 4: {
@@ -73,7 +73,11 @@ const state = {
             "&request=GetFeature&version=2.0.0" +
             "&outputFormat=json&srsName=" +
             projection +
-            "&typeNames=geodata.gov.gr:262a95fb-2d88-4df8-980f-5ed4de44245b&count=100"
+            "&typeNames=geodata.gov.gr:262a95fb-2d88-4df8-980f-5ed4de44245b&count=100" +
+            "&bbox=" +
+            extent.join(",") +
+            "," +
+            projection
           );
         },
         strategyFactory() {
@@ -96,9 +100,46 @@ const state = {
       ]
     },
     201: {
-      title: "Countries",
+      title: "Όρια Δήμων (Καλλικράτης)",
       cmp: "vl-layer-vector",
       visible: true,
+      renderMode: "image",
+      source: {
+        cmp: "vl-source-vector",
+        features: [],
+        url(extent, resolution, projection) {
+          return (
+            "https://geodata.gov.gr/geoserver/ows?service=WFS&" +
+            "&request=GetFeature&version=2.0.0" +
+            "&outputFormat=json&srsName=" +
+            projection +
+            "&typeNames=geodata.gov.gr:c7b5978b-aca9-4d74-b8a5-d3a48d02f6d0" +
+            "&bbox=" +
+            extent.join(",") +
+            "," +
+            projection
+          );
+        },
+        strategyFactory() {
+          return loadingBBox;
+        }
+      },
+      style: [
+        {
+          cmp: "vl-style-box",
+          styles: {
+            "vl-style-stroke": {
+              color: "#219e46",
+              width: 2
+            }
+          }
+        }
+      ]
+    },
+    202: {
+      title: "Countries",
+      cmp: "vl-layer-vector",
+      visible: false,
       source: {
         cmp: "vl-source-vector",
         projection: "EPSG:4326",
@@ -109,21 +150,17 @@ const state = {
         {
           cmp: "vl-style-box",
           styles: {
-            "vl-style-fill": {
-              color: [255, 255, 255, 0.5]
-            },
             "vl-style-stroke": {
               color: "#219e46",
               width: 2
             },
             "vl-style-text": {
-              text: "\uf041",
-              font: "24px FontAwesome",
+              font: "12px",
               fill: {
-                color: "#2355af"
+                color: "red"
               },
               stroke: {
-                color: "white"
+                color: "red"
               }
             }
           }
@@ -131,7 +168,7 @@ const state = {
       ]
     }
   },
-  utilityLayersList: [1000, 1001],
+  utilityLayersList: [1000],
   utilityLayers: {
     1000: {
       id: "draw-target",
@@ -167,7 +204,9 @@ const state = {
   appStatus: "display",
   mapCenter: [21.78896, 40.30069],
   drawType: undefined,
-  measureOutput: ""
+  measureOutput: "",
+  selectedFeature: [],
+  activeTreeItem: []
 };
 
 const getters = {
@@ -180,7 +219,9 @@ const getters = {
   layersList: state => state.layersList,
   layers: state => state.layers,
   utilityLayersList: state => state.utilityLayersList,
-  utilityLayers: state => state.utilityLayers
+  utilityLayers: state => state.utilityLayers,
+  selectedFeature: state => state.selectedFeature,
+  activeTreeItem: state => state.activeTreeItem
 };
 const mutations = {
   UPDATE_APP_STATUS(state, payload) {
@@ -200,6 +241,12 @@ const mutations = {
   },
   UPDATE_MEASURE_OUTPUT(state, payload) {
     state.measureOutput = payload;
+  },
+  UPDATE_SELECTED_FEATURE(state, payload) {
+    state.selectedFeature = payload;
+  },
+  UPDATE_ACTIVE_TREE_ITEM (state, payload) {
+    state.activeTreeItem = payload;
   }
 };
 const actions = {
@@ -233,6 +280,12 @@ const actions = {
   },
   updateMeasureOutput({ commit }, payload) {
     commit("UPDATE_MEASURE_OUTPUT", payload);
+  },
+  updateSelectedFeature({ commit }, payload) {
+    commit("UPDATE_SELECTED_FEATURE", payload);
+  },
+  updateActiveTreeItem({ commit }, payload) {
+    commit("UPDATE_ACTIVE_TREE_ITEM", payload)
   }
 };
 

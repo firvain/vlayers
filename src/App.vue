@@ -3,6 +3,7 @@
     <v-app id="GisApp">
       <v-navigation-drawer v-model="drawer" app :width="400" sm-and-down>
         <LayersTree></LayersTree>
+        <featureInfo v-if="appStatus === 'info'"></featureInfo>
       </v-navigation-drawer>
       <v-toolbar color="primary" dark fixed app>
         <v-toolbar-side-icon
@@ -27,18 +28,24 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import LayersTree from "@/components/LayersTree.vue";
+import featureInfo from "@/components/featureInfo.vue";
 
 export default {
   name: "App",
   components: {
-    LayersTree
+    LayersTree,
+    featureInfo
   },
   data() {
     return {
       drawer: false
     };
   },
-  mounted() {}
+  computed: {
+    ...mapGetters("OpenLMAP", ["appStatus"])
+  },
+  methods: {}
 };
 </script>

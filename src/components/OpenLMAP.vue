@@ -165,6 +165,30 @@
             :stopClick="true"
             @drawstart="measureDrawStart"
           ></vl-interaction-draw>
+
+          <vl-interaction-select
+            :features.sync="selectedFeatures"
+            v-if="appStatus === 'info'"
+            :multi="true"
+            :filter="filterF"
+          >
+            <!-- select styles -->
+            <vl-style-box>
+              <vl-style-stroke color="#423e9e" :width="7"></vl-style-stroke>
+              <vl-style-fill :color="[254, 178, 76, 0.7]"></vl-style-fill>
+              <vl-style-circle :radius="5">
+                <vl-style-stroke color="#423e9e" :width="7"></vl-style-stroke>
+                <vl-style-fill :color="[254, 178, 76, 0.7]"></vl-style-fill>
+              </vl-style-circle>
+            </vl-style-box>
+            <vl-style-box :z-index="1">
+              <vl-style-stroke color="#d43f45" :width="2"></vl-style-stroke>
+              <vl-style-circle :radius="5">
+                <vl-style-stroke color="#d43f45" :width="2"></vl-style-stroke>
+              </vl-style-circle>
+            </vl-style-box>
+            <!--// select styles -->
+          </vl-interaction-select>
           <!--// Interactions-->
         </vl-map>
       </v-flex>
@@ -174,6 +198,7 @@
 <script>
 import MapTools from "@/components/MapTools";
 import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import { fromLonLat } from "ol/proj";
 import { getArea, getLength } from "ol/sphere.js";
 import { Polygon } from "ol/geom.js";
@@ -189,11 +214,11 @@ export default {
   },
   data() {
     return {
-      zoom: 5,
+      zoom: 10,
       rotation: 0,
       drawnFeatures: [],
-      measureFeatures: [],
-      measureOutput: ""
+      measureOutput: "",
+      selectedFeatures: []
     };
   },
   computed: {
@@ -203,7 +228,8 @@ export default {
       "drawType",
       "baseLayers",
       "layers",
-      "utilityLayers"
+      "utilityLayers",
+      "activeTreeItem"
     ]),
     centerInProjection: {
       get: function() {
@@ -215,6 +241,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions("OpenLMAP", ["updateSelectedFeature"]),
     formatLength(line) {
       const length = getLength(line);
       let output;
@@ -262,6 +289,30 @@ export default {
     },
     cancel() {
       this.drawnFeatures = [];
+      this.selectedFeatures = [];
+      this.updateSelectedFeature({});
+    },
+    filterF(feature, layer) {
+      if (layer.get("id") == this.activeTreeItem) return true;
+      return false;
+    }
+  },
+  watch: {
+    selectedFeatures(newValue) {
+      let selection = [];
+      if (newValue.length > 0) {
+        for (let item of newValue) {
+          const { properties } = item;
+          if (
+            Object.entries(properties).length !== 0 &&
+            properties.constructor === Object
+          ) {
+            selection.push(properties);
+          }
+        }
+        this.updateSelectedFeature(selection);
+      }
+      this.updateSelectedFeature(selection);
     }
   }
 };

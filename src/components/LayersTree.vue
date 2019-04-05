@@ -61,15 +61,23 @@ export default {
   data: () => ({
     open: [],
     search: null,
-    caseSensitive: false,
-    active: []
+    caseSensitive: false
   }),
   computed: {
-    ...mapGetters("OpenLMAP", ["layers", "baseLayers"]),
+    ...mapGetters("OpenLMAP", ["layers", "baseLayers", "activeTreeItem"]),
     filter() {
       return this.caseSensitive
         ? (item, search, textKey) => item[textKey].indexOf(search) > -1
         : undefined;
+    },
+    active: {
+      get: function() {
+        return this.activeTreeItem;
+      },
+      set: function(v) {
+        alert(v);
+        this.updateActiveTreeItem(v);
+      }
     },
     mapLayers() {
       let treeLayers = [
@@ -98,7 +106,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("OpenLMAP", ["updateVisibility"]),
+    ...mapActions("OpenLMAP", ["updateVisibility", "updateActiveTreeItem"]),
     changeVisibility({ id, visible }) {
       if (this.baseLayers[id] != null) {
         this.updateVisibility({ id, value: !visible });

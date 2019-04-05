@@ -3,7 +3,7 @@
     <v-card-actions>
       <v-container pa-0 fluid fill-height>
         <v-layout row wrap align-center justify-start>
-          <v-flex xs9 md9 lg9>
+          <v-flex shrink>
             <div class="text-xs-left">
               <v-btn
                 small
@@ -37,7 +37,7 @@
               <infoTool v-if="appStatus === 'info'"></infoTool>
             </div>
           </v-flex>
-          <v-flex xs3 md3 lg3>
+          <v-flex grow>
             <div class="text-xs-right">
               <v-btn
                 small
