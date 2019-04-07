@@ -4,6 +4,10 @@ export default {
     treeview: {
       search: "Αναζήτηση Επιπέδου",
       sensitive: "Τήρηση Πεζών Κεφαλαίων"
+    },
+    layers: {
+      base: "Υπόβαθρο",
+      vector: "Επίπεδα Χάρτη"
     }
   }
 };

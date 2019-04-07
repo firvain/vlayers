@@ -82,7 +82,7 @@ export default {
       let treeLayers = [
         {
           id: 1,
-          title: "Base Layers",
+          title: this.$t('map.layers.base'),
           children: Object.keys(this.baseLayers).map(k => {
             let original = this.baseLayers[k];
             let id = k;
@@ -92,7 +92,7 @@ export default {
         },
         {
           id: 2,
-          title: "Vector Layers",
+          title: this.$t('map.layers.vector'),
           children: Object.keys(this.layers).map(k => {
             let original = this.layers[k];
             let id = k;
