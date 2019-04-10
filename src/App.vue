@@ -5,32 +5,90 @@
         <LayersTree></LayersTree>
         <!-- <featureInfo v-if="appStatus === 'info'"></featureInfo> -->
       </v-navigation-drawer>
-      <v-toolbar color="primary" dark fixed app >
+      <v-toolbar color="primary" dark fixed app>
         <v-toolbar-side-icon
           @click.stop="drawer = !drawer"
         ></v-toolbar-side-icon>
         <v-toolbar-title>Terra Gis</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items >
-     
-          <v-btn flat to="/"><v-icon>mdi-home</v-icon></v-btn>
-          <v-btn flat to="/map"><v-icon>mdi-map</v-icon></v-btn>
-          <v-btn flat to="/about"><v-icon>mdi-information</v-icon></v-btn>
-          
-         
+        <v-toolbar-items>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn icon to="/" v-on="on"><v-icon>mdi-home</v-icon></v-btn>
+            </template>
+            <span>{{ $t("toolbar.home") }}</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn icon to="/map" v-on="on"><v-icon>mdi-map</v-icon></v-btn>
+            </template>
+            <span>{{ $t("toolbar.map") }}</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn icon to="/about" v-on="on"
+                ><v-icon>mdi-information</v-icon></v-btn
+              >
+            </template>
+            <span>{{ $t("toolbar.about") }}</span>
+          </v-tooltip>
         </v-toolbar-items>
-        <v-toolbar-items class="hidden-sm-and-down"> 
-           <v-btn @click="country('en')" depressed flat small><country-flag country='gb' size='normal'/></v-btn>
-          <v-btn @click="country('gr')" depressed flat small><country-flag country='gr' size='normal' @click="country('gr')"/></v-btn>
-          <v-btn @click="country('mk')" depressed flat small><country-flag country='mk' size='normal' @click="country('mk')"/></v-btn>
-         
-        </v-toolbar-items>
+        <v-menu offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn color="primary" v-on="on" depressed="">
+              {{ currentLang }}
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-tile @click="country('en')">
+              <v-list-tile-avatar>
+                <country-flag country="gb" size="small"></country-flag>
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title>English</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile @click="country('gr')">
+              <v-list-tile-avatar>
+                <country-flag country="gr" size="small"></country-flag>
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title>Ελληνικά</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile @click="country('mk')">
+              <v-list-tile-avatar>
+                <country-flag country="mk" size="small"></country-flag>
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title @click="country('mk')"
+                  >македонски јазик</v-list-tile-title
+                >
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
       </v-toolbar>
       <v-content>
         <router-view></router-view>
       </v-content>
-      <v-footer color="primary" dark app>
-        <span class="white--text">&copy; Terra Cognita 2019</span>
+      <v-footer color="primary" app height="auto">
+        <v-container>
+          <v-layout row wrap align-center justify-center>
+            <v-flex xs2>
+              <v-img
+                class="white"
+                contain
+                :src="require('@/assets/INTERREG_RGB.png')"
+                alt="Interreg Greece - FYROM"
+              ></v-img>
+            </v-flex>
+            <v-spacer></v-spacer>
+            <v-flex xs1 class="text-xs-center">
+              <span class="white--text">&copy; Terra Cognita 2019</span>
+            </v-flex>
+          </v-layout>
+        </v-container>
       </v-footer>
     </v-app>
   </div>
@@ -39,7 +97,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
-import CountryFlag from 'vue-country-flag';
+import CountryFlag from "vue-country-flag";
 import LayersTree from "@/components/LayersTree.vue";
 // import featureInfo from "@/components/featureInfo.vue";
 
@@ -62,12 +120,15 @@ export default {
       set(value) {
         this.updateSidebar(value);
       }
+    },
+    currentLang() {
+      return this.$i18n.locale();
     }
   },
   methods: {
     ...mapActions("OpenLMAP", ["updateSidebar"]),
     country(v) {
-      this.$i18n.set(v)
+      this.$i18n.set(v);
     }
   }
 };

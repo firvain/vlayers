@@ -38,7 +38,7 @@ const state = {
       title: "Bing Maps",
       apiKey:
         "Ap3sskZ5BccP6TvBr0FoLc9orA4_R1uh-8UjpOKYciXL1hNMtAJr_BdxMjTJNkpv",
-      imagerySet: "AerialWithLabels",
+      imagerySet: "AerialWithLabelsOnDemand",
       visible: false
     }
   },
@@ -247,10 +247,10 @@ const mutations = {
   UPDATE_SELECTED_FEATURE(state, payload) {
     state.selectedFeature = payload;
   },
-  UPDATE_ACTIVE_TREE_ITEM (state, payload) {
+  UPDATE_ACTIVE_TREE_ITEM(state, payload) {
     state.activeTreeItem = payload;
   },
-  UPDATE_SIDEBAR (state, payload) {
+  UPDATE_SIDEBAR(state, payload) {
     state.sidebar = payload;
   }
 };
@@ -291,10 +291,10 @@ const actions = {
     commit("UPDATE_SELECTED_FEATURE", payload);
   },
   updateActiveTreeItem({ commit }, payload) {
-    commit("UPDATE_ACTIVE_TREE_ITEM", payload)
+    commit("UPDATE_ACTIVE_TREE_ITEM", payload);
   },
   updateSidebar({ commit }, payload) {
-    commit("UPDATE_SIDEBAR", payload)
+    commit("UPDATE_SIDEBAR", payload);
   }
 };
 

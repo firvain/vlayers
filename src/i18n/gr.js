@@ -1,5 +1,10 @@
 export default {
   about: { msg: "Σχετικά" },
+  toolbar: {
+    home: "Αρχική",
+    map: "Χάρτης",
+    about: "Σχετικά"
+  },
   map: {
     treeview: {
       search: "Αναζήτηση Επιπέδου",
@@ -8,6 +13,12 @@ export default {
     layers: {
       base: "Υπόβαθρο",
       vector: "Επίπεδα Χάρτη"
+    },
+    tools: {
+      draw: "Σχεδιασμος",
+      measure: "Μετρήσεις",
+      info: "Πληροφορίες",
+      cancel: "Ακύρωση"
     }
   }
 };

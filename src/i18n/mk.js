@@ -1,5 +1,10 @@
 export default {
   about: { msg: "Ова е страница за" },
+  toolbar: {
+    home: "Дома",
+    map: "Мапа",
+    about: "За"
+  },
   map: {
     treeview: {
       search: "Листа на листа на пребарувања",
@@ -8,6 +13,12 @@ export default {
     layers: {
       base: "Основни слоеви",
       vector: "Мапа на слоеви"
+    },
+    tools: {
+      draw: "Нацртај на мапата",
+      measure: "Мерка",
+      info: "Информации за функцијата",
+      cancel: "Откажи"
     }
   }
 };
