@@ -26,9 +26,10 @@ export default {
         tooltip: "мерка на мапа"
       },
       info: {
-        tooltip: "слој информации"
+        tooltip: "слој информации",
+        multi: "многуброен функција"
       },
-      cancel: "ακυρωση"
+      cancel: "откажете"
     }
   }
 };

@@ -27,7 +27,7 @@ export default {
       },
       info: {
         tooltip: "layer info",
-        multi: "повеќе функции"
+        multi: "multipe features"
       },
       cancel: "cancel"
     }
