@@ -9,18 +9,19 @@
           justify-start
           v-if="appStatus === 'display'"
         >
+          <v-flex xs1 text-xs-center
+            ><span>{{ $t("map.tools.name") | uppercase }}</span></v-flex
+          >
           <v-flex shrink>
-            <div class="text-xs-left">
-              <v-btn small fab color="success" @click="toolAction('draw')"
-                ><v-icon small>mdi-square-edit-outline</v-icon></v-btn
-              >
-              <v-btn small fab color="error" @click="toolAction('measure')"
-                ><v-icon small>mdi-tape-measure</v-icon></v-btn
-              >
-              <v-btn small fab color="info" @click="toolAction('info')"
-                ><v-icon small>mdi-information-variant</v-icon></v-btn
-              >
-            </div>
+            <v-btn small icon color="accent" @click="toolAction('draw')"
+              ><v-icon small>mdi-square-edit-outline</v-icon></v-btn
+            >
+            <v-btn small icon color="accent" @click="toolAction('measure')"
+              ><v-icon small>mdi-tape-measure</v-icon></v-btn
+            >
+            <v-btn small icon color="accent" @click="toolAction('info')"
+              ><v-icon small>mdi-information-variant</v-icon></v-btn
+            >
           </v-flex>
         </v-layout>
         <v-layout
@@ -39,8 +40,9 @@
           <v-flex grow>
             <div class="text-xs-right">
               <v-btn small color="error" @click="toolActionCancel()"
-                >cancel<v-icon right small>mdi-cancel</v-icon></v-btn
-              >
+                >{{ $t("map.tools.cancel") }}
+                <v-icon right small>mdi-cancel</v-icon>
+              </v-btn>
             </div>
           </v-flex>
         </v-layout>
@@ -51,6 +53,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
+import Vue2Filters from "vue2-filters";
 
 import infoTool from "@/components/infoTool";
 import drawTool from "@/components/drawTool";
@@ -63,6 +66,7 @@ export default {
     measureTool,
     infoTool
   },
+  mixins: [Vue2Filters.mixin],
   props: {
     output: String
   },

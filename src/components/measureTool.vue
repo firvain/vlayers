@@ -1,16 +1,21 @@
 <template>
-  <v-flex shrink>
-    <v-container fluid fill-height pa-0 text-xs-center>
-      <v-layout row wrap justify-center align-center>
-        <v-flex>
-          <v-radio-group ref="measureTypeRadioPicker" row v-model="radioGroup">
-            <v-radio label="LineString" value="LineString"></v-radio>
-            <v-radio label="Polygon" value="Polygon"></v-radio>
-          </v-radio-group>
-        </v-flex>
-        <v-flex>{{ output }}</v-flex>
-      </v-layout></v-container
+  <v-flex>
+    <v-radio-group
+      ref="measureTypeRadioPicker"
+      row
+      v-model="radioGroup"
+      hide-details
+      :label="$t('map.tools.selectFeature') | uppercase"
+      class="ma-0 pa-0"
     >
+      <v-radio label="LineString" value="LineString"></v-radio>
+      <v-radio label="Polygon" value="Polygon"></v-radio>
+      <template v-slot:append v-if="output"
+        ><code class="a body-2 text-no-wrap black--text"
+          >{{ $t("map.tools.result") | uppercase }} : {{ output }}</code
+        >
+      </template>
+    </v-radio-group>
   </v-flex>
 </template>
 <script>
@@ -53,3 +58,8 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.a {
+  line-height: 2;
+}
+</style>

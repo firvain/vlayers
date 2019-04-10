@@ -28,11 +28,11 @@ const state = {
       title: "OpenStreetMap",
       visible: true
     },
-    101: {
-      name: "sputnik",
-      title: "Sputnik Maps",
-      visible: false
-    },
+    // 101: {
+    //   name: "sputnik",
+    //   title: "Sputnik Maps",
+    //   visible: false
+    // },
     102: {
       name: "bingmaps",
       title: "Bing Maps",
@@ -45,15 +45,15 @@ const state = {
   layersList: [200, 201, 202],
   layers: {
     // Tile layer with WMS source
-    // 4: {
-    //   id: "wms",
-    //   title: "NATURA",
+    // 203: {
+    //   title: "NATURA 2220",
     //   cmp: "vl-layer-tile",
-    //   visible: false,
+    //   visible: true,
     //   source: {
     //     cmp: "vl-source-wms",
     //     url:
-    //       "http://geodata.gov.gr/geoserver/ows?service=WMS&request=GetMap&version=1.3.0&WIDTH=256&HEIGHT=256&format=image/png&srs=EPSG:4326&bbox=32.573282,16.944492,42.724649,30.83121",
+    //       "http://geodata.gov.gr/geoserver/ows?service=WMS&request=GetMap&version=1.3.0" +
+    //       "&WIDTH=256&HEIGHT=256&format=image/png&srs=EPSG:4326&bbox=32.573282,16.944492,42.724649,30.83121",
     //     layers: "geodata.gov.gr:262a95fb-2d88-4df8-980f-5ed4de44245b",
     //     extParams: { TILED: true },
     //     serverType: "geoserver"
@@ -207,7 +207,8 @@ const state = {
   drawType: undefined,
   measureOutput: "",
   selectedFeature: [],
-  activeTreeItem: []
+  activeTreeItem: [],
+  multiInfo: false
 };
 
 const getters = {
@@ -223,7 +224,8 @@ const getters = {
   utilityLayers: state => state.utilityLayers,
   selectedFeature: state => state.selectedFeature,
   activeTreeItem: state => state.activeTreeItem,
-  sidebar: state => state.sidebar
+  sidebar: state => state.sidebar,
+  multiInfo: state => state.multiInfo
 };
 const mutations = {
   UPDATE_APP_STATUS(state, payload) {
@@ -252,6 +254,9 @@ const mutations = {
   },
   UPDATE_SIDEBAR(state, payload) {
     state.sidebar = payload;
+  },
+  UPDATE_MULTI_INFO(state, payload) {
+    state.multiInfo = payload;
   }
 };
 const actions = {
@@ -295,6 +300,9 @@ const actions = {
   },
   updateSidebar({ commit }, payload) {
     commit("UPDATE_SIDEBAR", payload);
+  },
+  updateMultinfo({ commit }, payload) {
+    commit("UPDATE_MULTI_INFO", payload);
   }
 };
 

@@ -7,7 +7,9 @@
             <v-flex xs12>
               <MapTools :output="measureOutput" @cancel="cancel"></MapTools>
             </v-flex>
-            <v-flex><featureInfo></featureInfo> </v-flex>
+            <v-flex v-if="this.selectedFeatures.length !== 0"
+              ><featureInfo></featureInfo>
+            </v-flex>
           </v-layout>
         </v-container>
       </v-flex>
@@ -176,7 +178,7 @@
           <vl-interaction-select
             :features.sync="selectedFeatures"
             v-if="appStatus === 'info'"
-            :multi="true"
+            :multi="this.multiInfo"
             :filter="filterF"
           >
             <!-- select styles -->
@@ -238,7 +240,8 @@ export default {
       "baseLayers",
       "layers",
       "utilityLayers",
-      "activeTreeItem"
+      "activeTreeItem",
+      "multiInfo"
     ]),
     centerInProjection: {
       get: function() {

@@ -15,10 +15,21 @@ export default {
       vector: "Map Layers"
     },
     tools: {
-      draw: "Draw On Map",
-      measure: "Measure",
-      info: "Feature Info",
-      cancel: "Cancel"
+      name: "tools",
+      tooltip: "map tools",
+      selectFeature: "select",
+      result: "result",
+      draw: {
+        tooltip: "draw on map"
+      },
+      measure: {
+        tooltip: "measure on map"
+      },
+      info: {
+        tooltip: "layer info",
+        multi: "повеќе функции"
+      },
+      cancel: "cancel"
     }
   }
 };

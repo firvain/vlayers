@@ -15,10 +15,20 @@ export default {
       vector: "Мапа на слоеви"
     },
     tools: {
-      draw: "Нацртај на мапата",
-      measure: "Мерка",
-      info: "Информации за функцијата",
-      cancel: "Откажи"
+      name: "алатки",
+      tooltip: "алатки за мапи",
+      selectFeature: "одберете",
+      result: "резултат",
+      draw: {
+        tooltip: "цртаат на мапата"
+      },
+      measure: {
+        tooltip: "мерка на мапа"
+      },
+      info: {
+        tooltip: "слој информации"
+      },
+      cancel: "ακυρωση"
     }
   }
 };

@@ -15,10 +15,21 @@ export default {
       vector: "Επίπεδα Χάρτη"
     },
     tools: {
-      draw: "Σχεδιασμος",
-      measure: "Μετρήσεις",
-      info: "Πληροφορίες",
-      cancel: "Ακύρωση"
+      name: "εργαλεια",
+      tooltip: "εργαλεια  χαρτη",
+      selectFeature: "επιλεξτε",
+      result: "αποτελεσμα",
+      draw: {
+        tooltip: "σχεδιασμος στο χαρτη"
+      },
+      measure: {
+        tooltip: "μετρήσεις στο χαρτη"
+      },
+      info: {
+        tooltip: "πληροφορίες επιπέδου",
+        multi: "πολλαπλα στοχεια"
+      },
+      cancel: "ακυρωση"
     }
   }
 };
