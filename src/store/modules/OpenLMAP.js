@@ -1,5 +1,5 @@
 import { loadingBBox } from "vuelayers/lib/ol-ext";
-import { defaultStyle, NaturaStyleFunc } from "./styles";
+import { defaultStyle, drawStyle, NaturaStyleFunc } from "./styles";
 
 // const findNested = (obj, key, value) => {
 //   // console.log(obj);
@@ -136,22 +136,8 @@ const state = {
       },
       style: [
         {
-          cmp: "vl-style-box",
-          styles: {
-            "vl-style-stroke": {
-              color: "#219e46",
-              width: 2
-            },
-            "vl-style-text": {
-              font: "12px",
-              fill: {
-                color: "red"
-              },
-              stroke: {
-                color: "red"
-              }
-            }
-          }
+          cmp: "vl-style-func",
+          factory: defaultStyle
         }
       ]
     }
@@ -168,23 +154,8 @@ const state = {
       },
       style: [
         {
-          cmp: "vl-style-box",
-          styles: {
-            "vl-style-fill": {
-              color: [255, 255, 255, 0.5]
-            },
-            "vl-style-stroke": {
-              color: "red",
-              width: 3
-            },
-            "vl-style-circle": {
-              radius: 3,
-              stroke: {
-                width: 1.5,
-                color: "red"
-              }
-            }
-          }
+          cmp: "vl-style-func",
+          factory: drawStyle
         }
       ]
     }

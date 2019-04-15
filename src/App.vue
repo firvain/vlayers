@@ -9,7 +9,8 @@
         <v-toolbar-side-icon
           @click.stop="drawer = !drawer"
         ></v-toolbar-side-icon>
-        <v-toolbar-title>Terra Gis</v-toolbar-title>
+        <v-toolbar-title> Terrarum</v-toolbar-title>
+
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-tooltip bottom>
@@ -75,16 +76,16 @@
       <v-footer color="primary" app height="auto">
         <v-container>
           <v-layout row wrap align-center justify-center>
-            <v-flex xs2>
+            <v-flex xs6 md3 lg2>
               <v-img
                 class="white"
                 contain
-                :src="require('@/assets/INTERREG_RGB.png')"
+                :src="require('@/assets/placeholder.com-logo3.png')"
                 alt="Interreg Greece - FYROM"
               ></v-img>
             </v-flex>
             <v-spacer></v-spacer>
-            <v-flex xs1 class="text-xs-center">
+            <v-flex shrink class="text-xs-center">
               <span class="white--text">&copy; Terra Cognita 2019</span>
             </v-flex>
           </v-layout>

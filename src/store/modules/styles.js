@@ -55,3 +55,19 @@ export function NaturaStyleFunc() {
     }
   };
 }
+export function drawStyle() {
+  const style = [
+    createStyle({
+      strokeColor: "red",
+      strokeWidth: 3,
+      fillColor: [255, 255, 255, 0.5],
+      imageRadius: 5,
+      imageStrokeWidth: 1.5,
+      imageStrokeColor: "red"
+    })
+  ];
+
+  return function _selectStyle() {
+    return style;
+  };
+}
