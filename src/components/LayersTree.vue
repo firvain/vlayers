@@ -64,7 +64,7 @@ export default {
     caseSensitive: false
   }),
   computed: {
-    ...mapGetters("OpenLMAP", ["layers", "baseLayers", "activeTreeItem"]),
+    ...mapGetters("map", ["layers", "baseLayers", "activeTreeItem"]),
     filter() {
       return this.caseSensitive
         ? (item, search, textKey) => item[textKey].indexOf(search) > -1
@@ -82,7 +82,7 @@ export default {
       let treeLayers = [
         {
           id: 1,
-          title: this.$t('map.layers.base'),
+          title: this.$t("map.layers.base"),
           children: Object.keys(this.baseLayers).map(k => {
             let original = this.baseLayers[k];
             let id = k;
@@ -92,7 +92,7 @@ export default {
         },
         {
           id: 2,
-          title: this.$t('map.layers.vector'),
+          title: this.$t("map.layers.vector"),
           children: Object.keys(this.layers).map(k => {
             let original = this.layers[k];
             let id = k;
@@ -105,7 +105,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("OpenLMAP", ["updateVisibility", "updateActiveTreeItem"]),
+    ...mapActions("map", ["updateVisibility", "updateActiveTreeItem"]),
     changeVisibility({ id, visible }) {
       if (this.baseLayers[id] != null) {
         this.updateVisibility({ id, value: !visible });

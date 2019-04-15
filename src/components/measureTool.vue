@@ -30,7 +30,8 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters("OpenLMAP", ["appStatus", "drawType"]),
+    ...mapGetters("app", ["appStatus"]),
+    ...mapGetters("map", ["drawType"]),
     radioGroup: {
       get: function() {
         if (this.drawType) {
@@ -45,7 +46,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions("OpenLMAP", ["updateAppStatus", "updateDrawType"]),
+    ...mapActions("app", ["updateAppStatus"]),
+    ...mapActions("map", ["updateDrawType"]),
     toolAction(value) {
       this.updateAppStatus(value);
     }

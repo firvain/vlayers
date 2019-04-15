@@ -20,7 +20,8 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters("OpenLMAP", ["appStatus", "multiInfo"]),
+    ...mapGetters("app", ["appStatus", "multiInfo"]),
+    ...mapGetters("map", ["multiInfo"]),
     switch1: {
       get() {
         return this.multInfo;
@@ -31,11 +32,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions("OpenLMAP", [
+    ...mapActions("app", [
       "updateAppStatus",
       "updateSidebar",
       "updateMultinfo"
-    ])
+    ]),
+    ...mapActions("map", ["updateMultinfo"])
   },
   mounted() {
     this.updateSidebar(true);

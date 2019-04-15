@@ -20,7 +20,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters("OpenLMAP", ["selectedFeature"]),
+    ...mapGetters("map", ["selectedFeature"]),
     headers() {
       let header = [];
       for (const item of Object.keys(this.selectedFeature[0])) {

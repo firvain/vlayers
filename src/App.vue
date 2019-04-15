@@ -107,13 +107,12 @@ export default {
   components: {
     LayersTree,
     CountryFlag
-    // featureInfo
   },
   data() {
     return {};
   },
   computed: {
-    ...mapGetters("OpenLMAP", ["appStatus", "sidebar"]),
+    ...mapGetters("app", ["appStatus", "sidebar"]),
     drawer: {
       get() {
         return this.sidebar;
@@ -127,7 +126,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("OpenLMAP", ["updateSidebar"]),
+    ...mapActions("app", ["updateSidebar"]),
     country(v) {
       this.$i18n.set(v);
     }

@@ -1,26 +1,6 @@
 import { loadingBBox } from "vuelayers/lib/ol-ext";
 import { defaultStyle, drawStyle, NaturaStyleFunc } from "./styles";
 
-// const findNested = (obj, key, value) => {
-//   // console.log(obj);
-//   // Base case
-//   if (obj[key] === value) {
-//     return obj;
-//   } else if (obj.children) {
-//     for (let i = 0, len = Object.keys(obj.children).length; i < len; i++) {
-//       //TODO better logic
-//       if (typeof obj.children[i] == "object") {
-//         // console.log(this);
-//         let found = findNested(obj.children[i], key, value);
-//         if (found) {
-//           // If the object was found in the recursive call, bubble it up.
-//           return found;
-//         }
-//       }
-//     }
-//   }
-// };
-
 const state = {
   baseLayersList: [100, 101, 102],
   baseLayers: {
@@ -160,8 +140,6 @@ const state = {
       ]
     }
   },
-  sidebar: false,
-  appStatus: "display",
   mapCenter: [21.78896, 40.30069],
   drawType: undefined,
   measureOutput: "",
@@ -172,24 +150,19 @@ const state = {
 
 const getters = {
   mapCenter: state => state.mapCenter,
-  appStatus: state => state.appStatus,
-  drawType: state => state.drawType,
-  measureOutput: state => state.measureOutput,
   baseLayersList: state => state.baseLayersList,
   baseLayers: state => state.baseLayers,
   layersList: state => state.layersList,
   layers: state => state.layers,
   utilityLayersList: state => state.utilityLayersList,
   utilityLayers: state => state.utilityLayers,
+  drawType: state => state.drawType,
+  measureOutput: state => state.measureOutput,
   selectedFeature: state => state.selectedFeature,
-  activeTreeItem: state => state.activeTreeItem,
-  sidebar: state => state.sidebar,
-  multiInfo: state => state.multiInfo
+  multiInfo: state => state.multiInfo,
+  activeTreeItem: state => state.activeTreeItem
 };
 const mutations = {
-  UPDATE_APP_STATUS(state, payload) {
-    state.appStatus = payload;
-  },
   setMapCenter(state, payload) {
     state.mapCenter = payload;
   },
@@ -198,6 +171,9 @@ const mutations = {
   },
   UPDATE_MAP_CENTER(state, payload) {
     state.mapCenter = payload;
+  },
+  UPDATE_MULTI_INFO(state, payload) {
+    state.multiInfo = payload;
   },
   UPDATE_DRAW_TYPE(state, payload) {
     state.drawType = payload;
@@ -210,12 +186,6 @@ const mutations = {
   },
   UPDATE_ACTIVE_TREE_ITEM(state, payload) {
     state.activeTreeItem = payload;
-  },
-  UPDATE_SIDEBAR(state, payload) {
-    state.sidebar = payload;
-  },
-  UPDATE_MULTI_INFO(state, payload) {
-    state.multiInfo = payload;
   }
 };
 const actions = {
@@ -242,9 +212,6 @@ const actions = {
       commit("UPDATE_LAYER_VISIBILITY", { item, value });
     }
   },
-  updateAppStatus({ commit }, payload) {
-    commit("UPDATE_APP_STATUS", payload);
-  },
   updateDrawType({ commit }, payload) {
     commit("UPDATE_DRAW_TYPE", payload);
   },
@@ -256,9 +223,6 @@ const actions = {
   },
   updateActiveTreeItem({ commit }, payload) {
     commit("UPDATE_ACTIVE_TREE_ITEM", payload);
-  },
-  updateSidebar({ commit }, payload) {
-    commit("UPDATE_SIDEBAR", payload);
   },
   updateMultinfo({ commit }, payload) {
     commit("UPDATE_MULTI_INFO", payload);

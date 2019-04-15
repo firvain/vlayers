@@ -71,10 +71,11 @@ export default {
     output: String
   },
   computed: {
-    ...mapGetters("OpenLMAP", ["appStatus"])
+    ...mapGetters("app", ["appStatus"])
   },
   methods: {
-    ...mapActions("OpenLMAP", ["updateAppStatus", "updateDrawType"]),
+    ...mapActions("app", ["updateAppStatus"]),
+    ...mapActions("map", ["map", "updateDrawType"]),
     toolAction(value) {
       this.updateAppStatus(value);
     },

@@ -18,7 +18,7 @@
           ref="map"
           :load-tiles-while-animating="true"
           :load-tiles-while-interacting="true"
-          style="height:800px;width:100%"
+          style="height:900px;width:100%"
           @mounted="onMapMounted"
         >
           <vl-view
@@ -233,9 +233,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("OpenLMAP", [
+    ...mapGetters("map", [
       "mapCenter",
-      "appStatus",
       "drawType",
       "baseLayers",
       "layers",
@@ -243,6 +242,7 @@ export default {
       "activeTreeItem",
       "multiInfo"
     ]),
+    ...mapGetters("app", ["appStatus"]),
     centerInProjection: {
       get: function() {
         return fromLonLat(this.mapCenter);
@@ -253,7 +253,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("OpenLMAP", ["updateSelectedFeature"]),
+    ...mapActions("map", ["updateSelectedFeature"]),
     formatLength(line) {
       const length = getLength(line);
       let output;
