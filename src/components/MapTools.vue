@@ -22,6 +22,9 @@
             <v-btn small icon color="accent" @click="toolAction('info')"
               ><v-icon small>mdi-information-variant</v-icon></v-btn
             >
+            <v-btn small icon color="accent" @click="toolAction('print')"
+              ><v-icon small>mdi-printer</v-icon></v-btn
+            >
           </v-flex>
         </v-layout>
         <v-layout
@@ -37,6 +40,7 @@
             :output="output"
           ></measureTool>
           <infoTool v-if="appStatus === 'info'"></infoTool>
+          <printTool v-if="appStatus === 'print'"></printTool>
           <v-flex grow>
             <div class="text-xs-right">
               <v-btn small color="error" @click="toolActionCancel()"
@@ -58,13 +62,15 @@ import Vue2Filters from "vue2-filters";
 import infoTool from "@/components/infoTool";
 import drawTool from "@/components/drawTool";
 import measureTool from "@/components/measureTool";
+import printTool from "@/components/printTool";
 
 export default {
   name: "maptools",
   components: {
     drawTool,
     measureTool,
-    infoTool
+    infoTool,
+    printTool
   },
   mixins: [Vue2Filters.mixin],
   props: {

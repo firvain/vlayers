@@ -15,11 +15,13 @@
       </v-flex>
       <v-flex xs12>
         <vl-map
+          id="mymap"
           ref="map"
           :load-tiles-while-animating="true"
           :load-tiles-while-interacting="true"
           style="height:900px;width:100%"
           @mounted="onMapMounted"
+          @rendercomplete.once="renderComplete"
         >
           <vl-view
             :zoom.sync="zoom"
@@ -307,6 +309,9 @@ export default {
     filterF(feature, layer) {
       if (layer.get("id") == this.activeTreeItem) return true;
       return false;
+    },
+    renderComplete() {
+      return null;
     }
   },
   watch: {
