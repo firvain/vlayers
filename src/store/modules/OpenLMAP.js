@@ -1,4 +1,59 @@
-import { loadingBBox } from "vuelayers/lib/ol-ext";
+import { loadingBBox, createStyle } from "vuelayers/lib/ol-ext";
+function defaultStyle() {
+  return function _defaultStyle() {
+    const style = [
+      createStyle({
+        strokeColor: "black",
+        strokeWidth: 1,
+        strokeDash: [2, 2]
+        // text: feature.get("NAME")
+      })
+    ];
+    return style;
+  };
+}
+function NaturaStyleFunc() {
+  const defaultStyle = [
+    createStyle({
+      strokeColor: "#255d00",
+      strokeWidth: 2,
+      fillColor: "#255d00"
+    })
+  ];
+  const spa = [
+    createStyle({
+      strokeColor: "#255d00",
+      strokeWidth: 1,
+      fillColor: "#255d00"
+    })
+  ];
+  const sci = [
+    createStyle({
+      strokeColor: "#558b2f",
+      strokeWidth: 1,
+      fillColor: "#558b2f"
+    })
+  ];
+  const spasci = [
+    createStyle({
+      strokeColor: "#85bb5c",
+      strokeWidth: 4,
+      fillColor: "#85bb5c"
+    })
+  ];
+  return function _NaturaStyleFunc(feature) {
+    switch (feature.getProperties().SITETYPE) {
+      case "SPA":
+        return spa;
+      case "SCI":
+        return sci;
+      case "SPASCI":
+        return spasci;
+      default:
+        return defaultStyle;
+    }
+  };
+}
 
 // const findNested = (obj, key, value) => {
 //   // console.log(obj);
@@ -69,7 +124,7 @@ const state = {
         features: [],
         url(extent, resolution, projection) {
           return (
-            "https://geodata.gov.gr/geoserver/ows?service=WFS&" +
+            "http://geodata.gov.gr/geoserver/ows?service=WFS&" +
             "&request=GetFeature&version=2.0.0" +
             "&outputFormat=json&srsName=" +
             projection +
@@ -86,16 +141,8 @@ const state = {
       },
       style: [
         {
-          cmp: "vl-style-box",
-          styles: {
-            "vl-style-stroke": {
-              width: 2,
-              color: "#69a01b"
-            },
-            "vl-style-fill": {
-              color: [105, 160, 27, 0.5]
-            }
-          }
+          cmp: "vl-style-func",
+          factory: NaturaStyleFunc
         }
       ]
     },
@@ -109,7 +156,7 @@ const state = {
         features: [],
         url(extent, resolution, projection) {
           return (
-            "https://geodata.gov.gr/geoserver/ows?service=WFS&" +
+            "http://geodata.gov.gr/geoserver/ows?service=WFS&" +
             "&request=GetFeature&version=2.0.0" +
             "&outputFormat=json&srsName=" +
             projection +
@@ -126,13 +173,8 @@ const state = {
       },
       style: [
         {
-          cmp: "vl-style-box",
-          styles: {
-            "vl-style-stroke": {
-              color: "#219e46",
-              width: 2
-            }
-          }
+          cmp: "vl-style-func",
+          factory: defaultStyle
         }
       ]
     },
