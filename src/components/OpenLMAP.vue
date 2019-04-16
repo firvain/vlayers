@@ -19,7 +19,7 @@
           ref="map"
           :load-tiles-while-animating="true"
           :load-tiles-while-interacting="true"
-          style="height:900px;width:100%"
+          class="mymap"
           @mounted="onMapMounted"
           @rendercomplete.once="renderComplete"
         >
@@ -367,9 +367,12 @@ export default {
   }
 };
 </script>
-<style lang="css">
-.ol-overviewmap
- {
+<style>
+.mymap {
+  height: calc(100vh - 240px);
+  width: 100%;
+}
+.ol-overviewmap {
   bottom: auto;
   left: auto;
   right: 0.5em;

@@ -23,6 +23,7 @@
   "homepage": "https://vlayers.herokuapp.com/",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "colormap": "^2.3.1",
     "express": "^4.16.4",
     "jspdf": "^1.5.3",
     "serve-static": "^1.13.2",

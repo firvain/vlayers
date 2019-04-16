@@ -1,44 +1,44 @@
 <template>
-    <v-container fluid pa-0 ma-0>
-      <v-layout align-center justify-center row wrap fill-heigh>
-        <v-flex xs4>
-          <v-select
-            v-model="selectDim"
-            :items="dims"
-            label="Standard"
-            solo
-            dense
-            hide-details
-            return-object
-          ></v-select>
-        </v-flex>
+  <v-container fluid pa-0 ma-0>
+    <v-layout align-center justify-center row wrap fill-heigh>
+      <v-flex xs4>
+        <v-select
+          v-model="selectDim"
+          :items="dims"
+          label="Standard"
+          solo
+          dense
+          hide-details
+          return-object
+        ></v-select>
+      </v-flex>
 
-        <v-spacer></v-spacer>
-        <v-flex xs4>
-          <v-select
-            v-model="selectResolution"
-            :items="resolutions"
-            label="Standard"
-            solo
-            dense
-            hide-details
-            return-object
-          ></v-select>
-        </v-flex>
-        <v-spacer></v-spacer>
-        <v-flex xs3 class="text-xs-left">
-          <v-btn
-            small
-            color="success"
-            @click="exportButton"
-            :loading="print.loading"
-            :disabled="print.loading"
-          >
-            Print
-          </v-btn>
-        </v-flex>
-      </v-layout>
-    </v-container>
+      <v-spacer></v-spacer>
+      <v-flex xs4>
+        <v-select
+          v-model="selectResolution"
+          :items="resolutions"
+          label="Standard"
+          solo
+          dense
+          hide-details
+          return-object
+        ></v-select>
+      </v-flex>
+      <v-spacer></v-spacer>
+      <v-flex xs3 class="text-xs-left">
+        <v-btn
+          small
+          color="success"
+          @click="exportButton"
+          :loading="print.loading"
+          :disabled="print.loading"
+        >
+          Print
+        </v-btn>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 <script>
 // import jsPDF from "jspdf";

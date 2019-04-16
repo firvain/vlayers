@@ -41,29 +41,16 @@ const state = {
     //   }
     // },
     200: {
-      title: "Natura 2000",
+      title: "Bird Directive Sites",
       cmp: "vl-layer-vector",
       visible: true,
       renderMode: "image",
       source: {
         cmp: "vl-source-vector",
+        projection: "EPSG:4326",
         features: [],
-        url(extent, resolution, projection) {
-          return (
-            "http://geodata.gov.gr/geoserver/ows?service=WFS&" +
-            "&request=GetFeature&version=2.0.0" +
-            "&outputFormat=json&srsName=" +
-            projection +
-            "&typeNames=geodata.gov.gr:262a95fb-2d88-4df8-980f-5ed4de44245b&count=100" +
-            "&bbox=" +
-            extent.join(",") +
-            "," +
-            projection
-          );
-        },
-        strategyFactory() {
-          return loadingBBox;
-        }
+        url:
+          "https://bio.discomap.eea.europa.eu/arcgis/rest/services/ProtectedSites/EUNIS_Website_Dyna_WM/MapServer/7/query?where=COUNTRY_CODE+%3D+%27GR%27&outFields=*&f=geojson"
       },
       style: [
         {
@@ -73,6 +60,25 @@ const state = {
       ]
     },
     201: {
+      title: "Habitats Directive Sites",
+      cmp: "vl-layer-vector",
+      visible: true,
+      renderMode: "image",
+      source: {
+        cmp: "vl-source-vector",
+        projection: "EPSG:4326",
+        features: [],
+        url:
+          "https://bio.discomap.eea.europa.eu/arcgis/rest/services/ProtectedSites/EUNIS_Website_Dyna_WM/MapServer/3/query?where=COUNTRY_CODE+%3D+%27GR%27&outFields=*&f=geojson"
+      },
+      style: [
+        {
+          cmp: "vl-style-func",
+          factory: NaturaStyleFunc
+        }
+      ]
+    },
+    203: {
       title: "Όρια Δήμων (Καλλικράτης)",
       cmp: "vl-layer-vector",
       visible: true,
@@ -103,24 +109,24 @@ const state = {
           factory: defaultStyle
         }
       ]
-    },
-    202: {
-      title: "Countries",
-      cmp: "vl-layer-vector",
-      visible: false,
-      source: {
-        cmp: "vl-source-vector",
-        projection: "EPSG:4326",
-        url:
-          "https://openlayers.org/en/latest/examples/data/geojson/countries.geojson"
-      },
-      style: [
-        {
-          cmp: "vl-style-func",
-          factory: defaultStyle
-        }
-      ]
     }
+    // 202: {
+    //   title: "Countries",
+    //   cmp: "vl-layer-vector",
+    //   visible: false,
+    //   source: {
+    //     cmp: "vl-source-vector",
+    //     projection: "EPSG:4326",
+    //     url:
+    //       "https://openlayers.org/en/latest/examples/data/geojson/countries.geojson"
+    //   },
+    //   style: [
+    //     {
+    //       cmp: "vl-style-func",
+    //       factory: defaultStyle
+    //     }
+    //   ]
+    // }
   },
   utilityLayersList: [1000],
   utilityLayers: {
