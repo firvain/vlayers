@@ -1,58 +1,62 @@
 <template>
-  <v-card dark>
-    <v-card-actions>
-      <v-container pa-0 ma-0>
-        <v-layout
-          row
-          wrap
-          align-center
-          justify-start
-          v-if="appStatus === 'display'"
+  <v-container fluid pt-0 pb-1 pl-0 pr-0>
+    <v-layout
+      v-if="appStatus === 'display'"
+      class="grey darken-3"
+      align-center
+      justify-start
+      row
+      fill-height
+    >
+      <v-flex pa-1 shrink
+        ><span class="white--text">{{ $t("map.tools.name") | uppercase }}</span>
+      </v-flex>
+      <v-flex shrink>
+        <v-btn icon color="accent" @click="toolAction('draw')"
+          ><v-icon>mdi-square-edit-outline</v-icon></v-btn
         >
-          <v-flex xs1 text-xs-center
-            ><span>{{ $t("map.tools.name") | uppercase }}</span></v-flex
-          >
-          <v-flex shrink>
-            <v-btn small icon color="accent" @click="toolAction('draw')"
-              ><v-icon small>mdi-square-edit-outline</v-icon></v-btn
-            >
-            <v-btn small icon color="accent" @click="toolAction('measure')"
-              ><v-icon small>mdi-tape-measure</v-icon></v-btn
-            >
-            <v-btn small icon color="accent" @click="toolAction('info')"
-              ><v-icon small>mdi-information-variant</v-icon></v-btn
-            >
-            <v-btn small icon color="accent" @click="toolAction('print')"
-              ><v-icon small>mdi-printer</v-icon></v-btn
-            >
-          </v-flex>
-        </v-layout>
-        <v-layout
-          v-if="appStatus !== 'display'"
-          row
-          wrap
-          align-center
-          justify-start
+        <v-btn icon color="accent" @click="toolAction('measure')"
+          ><v-icon>mdi-tape-measure</v-icon></v-btn
         >
-          <drawTool v-if="appStatus === 'draw'"></drawTool>
-          <measureTool
-            v-if="appStatus === 'measure'"
-            :output="output"
-          ></measureTool>
-          <infoTool v-if="appStatus === 'info'"></infoTool>
-          <printTool v-if="appStatus === 'print'"></printTool>
-          <v-flex grow>
-            <div class="text-xs-right">
-              <v-btn small color="error" @click="toolActionCancel()"
-                >{{ $t("map.tools.cancel") }}
-                <v-icon right small>mdi-cancel</v-icon>
-              </v-btn>
-            </div>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-card-actions>
-  </v-card>
+        <v-btn icon color="accent" @click="toolAction('info')"
+          ><v-icon>mdi-information-variant</v-icon></v-btn
+        >
+        <v-btn icon color="accent" @click="toolAction('print')"
+          ><v-icon>mdi-printer</v-icon></v-btn
+        >
+      </v-flex>
+    </v-layout>
+    <v-layout
+      v-if="appStatus !== 'display'"
+      class="grey darken-3"
+      align-center
+      justify-start
+      row
+      wrap
+      fill-height
+    >
+      <v-flex pa-2 shrink v-if="appStatus === 'draw'"
+        ><drawTool></drawTool
+      ></v-flex>
+      <v-flex pa-2 shrink v-if="appStatus === 'measure'">
+        <measureTool :output="output"></measureTool>
+      </v-flex>
+      <v-flex pa-2 shrink v-if="appStatus === 'info'"
+        ><infoTool></infoTool
+      ></v-flex>
+      <v-flex pa-2 shrink v-if="appStatus === 'print'">
+        <printTool></printTool>
+      </v-flex>
+      <v-flex shrink>
+        <div class="text-xs-right">
+          <v-btn small color="error" @click="toolActionCancel()"
+            >{{ $t("map.tools.cancel") }}
+            <v-icon right small>mdi-cancel</v-icon>
+          </v-btn>
+        </div>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 <script>
 import { mapGetters } from "vuex";

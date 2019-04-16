@@ -1,13 +1,13 @@
 <template>
-  <v-container grid-list-md fluid pa-1 ma-0 fill-height>
-    <v-layout row wrap justify-center align-center>
+  <v-container fluid pl-1 pr-1 pt-1 pb-0 ma-0>
+    <v-layout align-space-around justify-end column fill-height>
       <v-flex xs12>
-        <v-container grid-list-md fluid pa-1 ma-0 fill-height>
-          <v-layout row wrap justify-center align-center>
+        <v-container fluid pa-0 ma-0>
+          <v-layout align-space-around justify-end column fill-height>
             <v-flex xs12>
               <MapTools :output="measureOutput" @cancel="cancel"></MapTools>
             </v-flex>
-            <v-flex v-if="this.selectedFeatures.length !== 0"
+            <v-flex v-if="this.selectedFeatures.length !== 0" xs12 pa-2
               ><featureInfo></featureInfo>
             </v-flex>
           </v-layout>
@@ -207,6 +207,7 @@
   </v-container>
 </template>
 <script>
+import jsPDF from "jspdf";
 import MapTools from "@/components/MapTools";
 import featureInfo from "@/components/featureInfo.vue";
 import { mapGetters } from "vuex";
@@ -244,7 +245,7 @@ export default {
       "activeTreeItem",
       "multiInfo"
     ]),
-    ...mapGetters("app", ["appStatus"]),
+    ...mapGetters("app", ["appStatus", "print"]),
     centerInProjection: {
       get: function() {
         return fromLonLat(this.mapCenter);
@@ -256,6 +257,7 @@ export default {
   },
   methods: {
     ...mapActions("map", ["updateSelectedFeature"]),
+    ...mapActions("app", ["updatePrint"]),
     formatLength(line) {
       const length = getLength(line);
       let output;
@@ -330,6 +332,37 @@ export default {
         this.updateSelectedFeature(selection);
       }
       this.updateSelectedFeature(selection);
+    },
+    print(newValue) {
+      if (!newValue.value) return;
+      const map = this.$refs.map.$map;
+      const size = map.getSize();
+      const extent = map.getView().calculateExtent(size);
+      map.once("rendercomplete", event => {
+        const canvas = event.context.canvas;
+        const data = canvas.toDataURL("image/jpeg");
+        const pdf = new jsPDF("landscape", undefined, newValue.format);
+        pdf.addImage(data, "JPEG", 0, 0, newValue.dim0, newValue.dim1);
+        pdf.save("map.pdf", { returnPromise: true }).then(() => {
+          this.updatePrint({
+            value: false,
+            width: undefined,
+            height: undefined,
+            dim0: undefined,
+            dim1: undefined,
+            format: undefined,
+            loading: false
+          });
+        });
+        // Reset original map size
+        map.setSize(size);
+        map.getView().fit(extent, { size: size });
+      });
+
+      // Set print size
+      const printSize = [newValue.width, newValue.height];
+      map.setSize(printSize);
+      map.getView().fit(extent, { size: printSize });
     }
   }
 };

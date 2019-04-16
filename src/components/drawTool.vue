@@ -1,30 +1,26 @@
 <template>
-  <v-flex>
-    <v-radio-group
-      ref="drawTypeRadioPicker"
-      row
-      v-model="radioGroup"
-      hide-details
-      :label="$t('map.tools.selectFeature') | uppercase"
-      class="ma-0 pa-0"
-    >
-      <v-radio
-        v-for="item in radioGroupItems"
-        :key="item.id"
-        :label="item.label"
-        :value="item.value"
-      ></v-radio>
-    </v-radio-group>
-  </v-flex>
+  <v-radio-group
+    ref="drawTypeRadioPicker"
+    row
+    v-model="radioGroup"
+    hide-details
+    :label="$t('map.tools.selectFeature') | uppercase"
+    class="pa-1 ma-0"
+    dark
+  >
+    <v-radio
+      v-for="item in radioGroupItems"
+      :key="item.id"
+      :label="item.label"
+      :value="item.value"
+    ></v-radio>
+  </v-radio-group>
 </template>
 <script>
-import Vue2Filters from "vue2-filters";
-
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 export default {
   name: "drawtool",
-  mixins: [Vue2Filters.mixin],
   data() {
     return {
       radioGroupItems: [
@@ -62,14 +58,6 @@ export default {
     ...mapActions("app", ["updateAppStatus"]),
     ...mapActions("map", ["updateDrawType"])
   },
-  watch: {
-    // appStatus(value) {
-    //   if (value === "draw") {
-    //     this.columns = 4;
-    //   } else {
-    //     this.columns = 1;
-    //   }
-    // }
-  }
+  watch: {}
 };
 </script>

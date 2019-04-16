@@ -24,7 +24,7 @@ export default {
     ...mapGetters("map", ["multiInfo"]),
     switch1: {
       get() {
-        return this.multInfo;
+        return this.multiInfo;
       },
       set(v) {
         this.updateMultinfo(v);
