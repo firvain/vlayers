@@ -131,6 +131,7 @@ const state = {
   utilityLayersList: [1000],
   utilityLayers: {
     1000: {
+      ref: "draw",
       id: "draw-target",
       title: "Draw",
       cmp: "vl-layer-vector",
@@ -151,7 +152,8 @@ const state = {
   measureOutput: "",
   selectedFeature: [],
   activeTreeItem: [],
-  multiInfo: false
+  multiInfo: false,
+  activeLayer: null
 };
 
 const getters = {
@@ -163,10 +165,10 @@ const getters = {
   utilityLayersList: state => state.utilityLayersList,
   utilityLayers: state => state.utilityLayers,
   drawType: state => state.drawType,
-  measureOutput: state => state.measureOutput,
   selectedFeature: state => state.selectedFeature,
   multiInfo: state => state.multiInfo,
-  activeTreeItem: state => state.activeTreeItem
+  activeTreeItem: state => state.activeTreeItem,
+  activeLayer: state => state.activeLayer
 };
 const mutations = {
   setMapCenter(state, payload) {
@@ -184,14 +186,14 @@ const mutations = {
   UPDATE_DRAW_TYPE(state, payload) {
     state.drawType = payload;
   },
-  UPDATE_MEASURE_OUTPUT(state, payload) {
-    state.measureOutput = payload;
-  },
   UPDATE_SELECTED_FEATURE(state, payload) {
     state.selectedFeature = payload;
   },
   UPDATE_ACTIVE_TREE_ITEM(state, payload) {
     state.activeTreeItem = payload;
+  },
+  UPDATE_ACTIVE_LAYER(state, { value }) {
+    state.activeLayer = value;
   }
 };
 const actions = {
@@ -221,9 +223,6 @@ const actions = {
   updateDrawType({ commit }, payload) {
     commit("UPDATE_DRAW_TYPE", payload);
   },
-  updateMeasureOutput({ commit }, payload) {
-    commit("UPDATE_MEASURE_OUTPUT", payload);
-  },
   updateSelectedFeature({ commit }, payload) {
     commit("UPDATE_SELECTED_FEATURE", payload);
   },
@@ -232,6 +231,9 @@ const actions = {
   },
   updateMultinfo({ commit }, payload) {
     commit("UPDATE_MULTI_INFO", payload);
+  },
+  updateActiveLayer({ commit }, payload) {
+    commit("UPDATE_ACTIVE_LAYER", payload);
   }
 };
 

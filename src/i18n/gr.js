@@ -29,6 +29,9 @@ export default {
         tooltip: "πληροφορίες επιπέδου",
         multi: "πολλαπλα στοχεια"
       },
+      select: {
+        tooltip: "επιλογη επιπεδου"
+      },
       cancel: "ακυρωση"
     }
   }

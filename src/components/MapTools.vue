@@ -6,12 +6,12 @@
       align-center
       justify-start
       row
+      wrap
       fill-height
+      xs6
     >
-      <v-flex pa-1 shrink
-        ><span class="white--text">{{ $t("map.tools.name") | uppercase }}</span>
-      </v-flex>
       <v-flex shrink>
+        <p style="display:inline-block;color:white">{{ $t("map.tools.name") | uppercase }}</p>
         <v-btn icon color="accent" @click="toolAction('draw')"
           ><v-icon>mdi-square-edit-outline</v-icon></v-btn
         >
@@ -35,26 +35,19 @@
       wrap
       fill-height
     >
-      <v-flex pa-2 shrink v-if="appStatus === 'draw'"
+      <v-flex pa-2 xs12 v-if="appStatus === 'draw'"
         ><drawTool></drawTool
       ></v-flex>
-      <v-flex pa-2 shrink v-if="appStatus === 'measure'">
+      <v-flex pa-2 xs12 v-if="appStatus === 'measure'">
         <measureTool :output="output"></measureTool>
       </v-flex>
-      <v-flex pa-2 shrink v-if="appStatus === 'info'"
+      <v-flex pa-2 xs12 v-if="appStatus === 'info'"
         ><infoTool></infoTool
       ></v-flex>
-      <v-flex pa-2 shrink v-if="appStatus === 'print'">
+      <v-flex pa-2 xs12 v-if="appStatus === 'print'">
         <printTool></printTool>
       </v-flex>
-      <v-flex shrink>
-        <div class="text-xs-right">
-          <v-btn small color="error" @click="toolActionCancel()"
-            >{{ $t("map.tools.cancel") }}
-            <v-icon right small>mdi-cancel</v-icon>
-          </v-btn>
-        </div>
-      </v-flex>
+      <!-- <v-spacer></v-spacer> -->
     </v-layout>
   </v-container>
 </template>
@@ -88,11 +81,6 @@ export default {
     ...mapActions("map", ["map", "updateDrawType"]),
     toolAction(value) {
       this.updateAppStatus(value);
-    },
-    toolActionCancel() {
-      this.$emit("cancel", this.appStatus);
-      this.updateAppStatus("display");
-      this.updateDrawType(undefined);
     }
   },
   watch: {}

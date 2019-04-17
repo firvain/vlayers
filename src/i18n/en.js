@@ -29,6 +29,9 @@ export default {
         tooltip: "layer info",
         multi: "multipe features"
       },
+      select: {
+        tooltip: "select layer"
+      },
       cancel: "cancel"
     }
   }

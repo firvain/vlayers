@@ -29,6 +29,9 @@ export default {
         tooltip: "слој информации",
         multi: "многуброен функција"
       },
+      select: {
+        tooltip: "одберете слој"
+      },
       cancel: "откажете"
     }
   }

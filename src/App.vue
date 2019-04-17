@@ -1,98 +1,94 @@
 <template>
-  <div id="app">
-    <v-app id="GisApp">
-      <v-navigation-drawer v-model="drawer" app :width="400" sm-and-down>
-        <LayersTree></LayersTree>
-        <!-- <featureInfo v-if="appStatus === 'info'"></featureInfo> -->
-      </v-navigation-drawer>
-      <v-toolbar color="primary" dark fixed app>
-        <v-toolbar-side-icon
-          @click.stop="drawer = !drawer"
-        ></v-toolbar-side-icon>
-        <v-toolbar-title> Terrarum</v-toolbar-title>
+  <v-app>
+    <v-navigation-drawer v-model="drawer" app :width="400" sm-and-down>
+      <LayersTree></LayersTree>
+      <!-- <featureInfo v-if="appStatus === 'info'"></featureInfo> -->
+    </v-navigation-drawer>
+    <v-toolbar color="primary" dark fixed app>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title> Terrarum</v-toolbar-title>
 
-        <v-spacer></v-spacer>
-        <v-toolbar-items>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-btn icon to="/" v-on="on"><v-icon>mdi-home</v-icon></v-btn>
-            </template>
-            <span>{{ $t("toolbar.home") }}</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-btn icon to="/map" v-on="on"><v-icon>mdi-map</v-icon></v-btn>
-            </template>
-            <span>{{ $t("toolbar.map") }}</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-btn icon to="/about" v-on="on"
-                ><v-icon>mdi-information</v-icon></v-btn
-              >
-            </template>
-            <span>{{ $t("toolbar.about") }}</span>
-          </v-tooltip>
-        </v-toolbar-items>
-        <v-menu offset-y>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn color="primary" v-on="on" depressed="">
-              {{ currentLang }}
-            </v-btn>
+            <v-btn icon to="/" v-on="on"><v-icon>mdi-home</v-icon></v-btn>
           </template>
-          <v-list>
-            <v-list-tile @click="country('en')">
-              <v-list-tile-avatar>
-                <country-flag country="gb" size="small"></country-flag>
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title>English</v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile @click="country('gr')">
-              <v-list-tile-avatar>
-                <country-flag country="gr" size="small"></country-flag>
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title>Ελληνικά</v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile @click="country('mk')">
-              <v-list-tile-avatar>
-                <country-flag country="mk" size="small"></country-flag>
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title @click="country('mk')"
-                  >македонски јазик</v-list-tile-title
-                >
-              </v-list-tile-content>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
-      </v-toolbar>
-      <v-content>
-        <router-view></router-view>
-      </v-content>
-      <v-footer color="primary" app height="auto">
-        <v-container>
-          <v-layout row wrap align-center justify-center>
-            <v-flex xs6 md3 lg2>
-              <v-img
-                class="white"
-                contain
-                :src="require('@/assets/placeholder.com-logo3.png')"
-                alt="Interreg Greece - FYROM"
-              ></v-img>
-            </v-flex>
-            <v-spacer></v-spacer>
-            <v-flex shrink class="text-xs-center">
-              <span class="white--text">&copy; Terra Cognita 2019</span>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-footer>
-    </v-app>
-  </div>
+          <span>{{ $t("toolbar.home") }}</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn icon to="/map" v-on="on"><v-icon>mdi-map</v-icon></v-btn>
+          </template>
+          <span>{{ $t("toolbar.map") }}</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn icon to="/about" v-on="on"
+              ><v-icon>mdi-information</v-icon></v-btn
+            >
+          </template>
+          <span>{{ $t("toolbar.about") }}</span>
+        </v-tooltip>
+      </v-toolbar-items>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn color="primary" v-on="on" depressed="">
+            {{ currentLang }}
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-tile @click="country('en')">
+            <v-list-tile-avatar>
+              <country-flag country="gb" size="small"></country-flag>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>English</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile @click="country('gr')">
+            <v-list-tile-avatar>
+              <country-flag country="gr" size="small"></country-flag>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Ελληνικά</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile @click="country('mk')">
+            <v-list-tile-avatar>
+              <country-flag country="mk" size="small"></country-flag>
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title @click="country('mk')"
+                >македонски јазик</v-list-tile-title
+              >
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+    </v-toolbar>
+    <v-content>
+      <router-view></router-view>
+    </v-content>
+    <v-footer color="primary" app fixed height="auto">
+      <v-container>
+        <v-layout row wrap align-center justify-center>
+          <v-flex xs6 md3 lg2>
+            <v-img
+              class="white"
+              contain
+              :src="require('@/assets/placeholder.com-logo3.png')"
+              alt="Interreg Greece - FYROM"
+            ></v-img>
+          </v-flex>
+          <v-spacer></v-spacer>
+          <v-flex shrink class="text-xs-center">
+            <span class="white--text">&copy; Terra Cognita 2019</span>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>

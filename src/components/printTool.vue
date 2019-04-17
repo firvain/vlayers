@@ -1,7 +1,7 @@
 <template>
   <v-container fluid pa-0 ma-0>
-    <v-layout align-center justify-center row wrap fill-heigh>
-      <v-flex xs4>
+    <v-layout align-center justify-space-around row wrap fill-heigh>
+      <v-flex xs3 md2 lg1>
         <v-select
           v-model="selectDim"
           :items="dims"
@@ -13,8 +13,7 @@
         ></v-select>
       </v-flex>
 
-      <v-spacer></v-spacer>
-      <v-flex xs4>
+      <v-flex xs3 md2 lg1>
         <v-select
           v-model="selectResolution"
           :items="resolutions"
@@ -25,8 +24,7 @@
           return-object
         ></v-select>
       </v-flex>
-      <v-spacer></v-spacer>
-      <v-flex xs3 class="text-xs-left">
+      <v-flex xs3 md2 lg1 class="text-xs-center">
         <v-btn
           small
           color="success"
@@ -37,6 +35,13 @@
           Print
         </v-btn>
       </v-flex>
+      <v-flex xs12 md2 lg1 class="text-xs-center">
+        <v-btn small color="error" @click="toolActionCancel()"
+          >{{ $t("map.tools.cancel") }}
+          <v-icon right small>mdi-cancel</v-icon>
+        </v-btn>
+      </v-flex>
+      <v-spacer></v-spacer>
     </v-layout>
   </v-container>
 </template>
@@ -68,7 +73,7 @@ export default {
     ...mapGetters("app", ["appStatus", "print"])
   },
   methods: {
-    ...mapActions("app", ["updatePrint"]),
+    ...mapActions("app", ["updateAppStatus", "updatePrint"]),
     exportButton() {
       const width = Math.round(
         (this.selectDim.value[0] * this.selectResolution.value) / 25.4
@@ -89,6 +94,9 @@ export default {
         format,
         loading: true
       });
+    },
+    toolActionCancel() {
+      this.updateAppStatus("display");
     }
   }
 };

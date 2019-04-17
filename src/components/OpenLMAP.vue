@@ -1,17 +1,11 @@
 <template>
   <v-container fluid pl-1 pr-1 pt-1 pb-0 ma-0>
-    <v-layout align-space-around justify-end column fill-height>
+    <v-layout align-center justify-start row wrap fill-height>
       <v-flex xs12>
-        <v-container fluid pa-0 ma-0>
-          <v-layout align-space-around justify-end column fill-height>
-            <v-flex xs12>
-              <MapTools :output="measureOutput" @cancel="cancel"></MapTools>
-            </v-flex>
-            <v-flex v-if="this.selectedFeatures.length !== 0" xs12 pa-2
-              ><featureInfo></featureInfo>
-            </v-flex>
-          </v-layout>
-        </v-container>
+        <MapTools :output="measureOutput"></MapTools>
+      </v-flex>
+      <v-flex v-if="this.selectedFeatures.length !== 0" xs12 pa-2
+        ><featureInfo></featureInfo>
       </v-flex>
       <v-flex xs12>
         <vl-map
@@ -175,6 +169,7 @@
             :type="drawType"
             :stopClick="true"
             @drawstart="measureDrawStart"
+            @drawend="measureDrawEnd"
           ></vl-interaction-draw>
 
           <vl-interaction-select
@@ -243,7 +238,8 @@ export default {
       "layers",
       "utilityLayers",
       "activeTreeItem",
-      "multiInfo"
+      "multiInfo",
+      "activeLayer"
     ]),
     ...mapGetters("app", ["appStatus", "print"]),
     centerInProjection: {
@@ -290,26 +286,26 @@ export default {
         new ZoomSlider()
       ]);
     },
-    measureDrawStart(evt) {
+    measureDrawStart() {
       if (this.appStatus === "draw") return;
-
-      let sketch = evt.feature;
-      sketch.getGeometry().on("change", evt => {
-        let geom = evt.target;
-        if (geom instanceof Polygon) {
-          this.measureOutput = this.formatArea(geom);
-        } else {
-          this.measureOutput = this.formatLength(geom);
-        }
-      });
+      this.$refs.draw.getSource().clear();
+      // evt.target.getOverlay().getSource().clear
+      // console.log(a);
+      // evt.target.getOverlay().getSource().refresh();
     },
-    cancel() {
-      this.drawnFeatures = [];
-      this.selectedFeatures = [];
-      this.updateSelectedFeature({});
+    measureDrawEnd(evt) {
+      
+      if (this.appStatus === "draw") return;
+      console.log(evt);
+      let geom = evt.feature.getGeometry();
+      if (geom instanceof Polygon) {
+        this.measureOutput = this.formatArea(geom);
+      } else {
+        this.measureOutput = this.formatLength(geom);
+      }
     },
     filterF(feature, layer) {
-      if (layer.get("id") == this.activeTreeItem) return true;
+      if (layer.get("id") == this.activeLayer) return true;
       return false;
     },
     renderComplete() {
@@ -332,6 +328,14 @@ export default {
         this.updateSelectedFeature(selection);
       }
       this.updateSelectedFeature(selection);
+    },
+    appStatus(newValue) {
+      if (newValue === "display") {
+        this.drawnFeatures = [];
+        this.selectedFeatures = [];
+        this.updateSelectedFeature({});
+        this.measureOutput = "";
+      }
     },
     print(newValue) {
       if (!newValue.value) return;
