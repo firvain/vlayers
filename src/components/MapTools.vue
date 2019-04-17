@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid pt-0 pb-1 pl-0 pr-0>
+  <v-container fluid pt-0 pb-1 pl-0 pr-0 style="height:80px;">
     <v-layout
       v-if="appStatus === 'display'"
       class="grey darken-3"
@@ -11,7 +11,9 @@
       xs6
     >
       <v-flex shrink>
-        <p style="display:inline-block;color:white">{{ $t("map.tools.name") | uppercase }}</p>
+        <p style="display:inline-block;color:white">
+          {{ $t("map.tools.name") | uppercase }}
+        </p>
         <v-btn icon color="accent" @click="toolAction('draw')"
           ><v-icon>mdi-square-edit-outline</v-icon></v-btn
         >

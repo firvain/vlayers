@@ -70,13 +70,14 @@
     <v-content>
       <router-view></router-view>
     </v-content>
-    <v-footer color="primary" app fixed height="auto">
-      <v-container>
-        <v-layout row wrap align-center justify-center>
+    <v-footer color="primary" app fixed height="60">
+      <v-container pa-0>
+        <v-layout row wrap align-center justify-center fill-height>
           <v-flex xs6 md3 lg2>
             <v-img
               class="white"
               contain
+              max-height="40"
               :src="require('@/assets/placeholder.com-logo3.png')"
               alt="Interreg Greece - FYROM"
             ></v-img>

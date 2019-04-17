@@ -1,7 +1,7 @@
 <template>
   <v-container fluid pl-1 pr-1 pt-1 pb-0 ma-0>
     <v-layout align-center justify-start row wrap fill-height>
-      <v-flex xs12>
+      <v-flex xs12 >
         <MapTools :output="measureOutput"></MapTools>
       </v-flex>
       <v-flex v-if="this.selectedFeatures.length !== 0" xs12 pa-2
@@ -373,7 +373,7 @@ export default {
 </script>
 <style>
 .mymap {
-  height: calc(100vh - 240px);
+  height: calc(100vh - 208px);
   width: 100%;
 }
 .ol-overviewmap {
