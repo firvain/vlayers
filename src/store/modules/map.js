@@ -218,6 +218,13 @@ const actions = {
     } else if (!state.baseLayersList.includes(parseInt(id))) {
       item = state.layers[id];
       commit("UPDATE_LAYER_VISIBILITY", { item, value });
+      Object.keys(state.layers).forEach(i => {
+        if (i !== id) {
+          item = state.layers[i];
+          let value = false; //! mutation is BAD!!!
+          commit("UPDATE_LAYER_VISIBILITY", { item, value });
+        }
+      });
     }
   },
   updateDrawType({ commit }, payload) {

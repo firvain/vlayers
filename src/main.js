@@ -7,8 +7,11 @@ import "./plugins/vue2-filters.js";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store/index.js";
+import Axios from "axios";
 
 Vue.config.productionTip = false;
+
+Vue.prototype.$http = Axios;
 
 new Vue({
   router,

@@ -44,9 +44,10 @@
             :key="key"
             :id="key"
             v-bind="layer"
+            
           >
             <!-- add vl-source-* -->
-            <component :is="layer.source.cmp" v-bind="layer.source">
+            <component :is="layer.source.cmp" v-bind="layer.source" @update:features="mds">
               <!-- add static features to vl-source-vector if provided -->
               <vl-feature
                 v-if="
@@ -271,6 +272,10 @@ export default {
   methods: {
     ...mapActions("map", ["updateSelectedFeature"]),
     ...mapActions("app", ["updatePrint"]),
+    mds() {
+      console.log('rendercomplete');
+    },
+
     formatLength(line) {
       const length = getLength(line);
       let output;

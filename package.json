@@ -22,6 +22,7 @@
   },
   "homepage": "https://vlayers.herokuapp.com/",
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "colormap": "^2.3.1",
     "express": "^4.16.4",
