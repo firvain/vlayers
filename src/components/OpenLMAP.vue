@@ -1,7 +1,7 @@
 <template>
   <v-container fluid pl-1 pr-1 pt-1 pb-0 ma-0>
     <v-layout align-center justify-start row wrap fill-height>
-      <v-flex xs12 >
+      <v-flex xs12>
         <MapTools :output="measureOutput"></MapTools>
       </v-flex>
       <v-flex v-if="this.selectedFeatures.length !== 0" xs12 pa-2
@@ -14,8 +14,8 @@
           :load-tiles-while-animating="true"
           :load-tiles-while-interacting="true"
           class="mymap"
+          :style="mapStyle"
           @mounted="onMapMounted"
-          @rendercomplete.once="renderComplete"
         >
           <vl-view
             :zoom.sync="zoom"
@@ -241,6 +241,23 @@ export default {
       "multiInfo",
       "activeLayer"
     ]),
+    mapStyle() {
+      const footerClientHeight = document.getElementsByTagName("footer")[0]
+        .clientHeight;
+      const toolBarClientHeight = document.getElementsByTagName("nav")[0]
+        .clientHeight;
+      // .clientHeight;
+      const h =
+        this.$vuetify.breakpoint.height -
+        footerClientHeight -
+        toolBarClientHeight -
+        92;
+
+      return {
+        height: h.toString() + "px",
+        width: "100%"
+      };
+    },
     ...mapGetters("app", ["appStatus", "print"]),
     centerInProjection: {
       get: function() {
@@ -289,12 +306,8 @@ export default {
     measureDrawStart() {
       if (this.appStatus === "draw") return;
       this.$refs.draw.getSource().clear();
-      // evt.target.getOverlay().getSource().clear
-      // console.log(a);
-      // evt.target.getOverlay().getSource().refresh();
     },
     measureDrawEnd(evt) {
-      
       if (this.appStatus === "draw") return;
       console.log(evt);
       let geom = evt.feature.getGeometry();
@@ -307,9 +320,6 @@ export default {
     filterF(feature, layer) {
       if (layer.get("id") == this.activeLayer) return true;
       return false;
-    },
-    renderComplete() {
-      return null;
     }
   },
   watch: {
