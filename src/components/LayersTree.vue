@@ -106,11 +106,13 @@ export default {
   },
   methods: {
     ...mapActions("map", ["updateVisibility", "updateActiveTreeItem"]),
+    ...mapActions("app", ["updateLoading"]),
     changeVisibility({ id, visible }) {
       if (this.baseLayers[id] != null) {
         this.updateVisibility({ id, value: !visible });
       }
       if (this.layers[id] != null) {
+        this.updateLoading(true);
         this.updateVisibility({ id, value: !visible });
       }
     }

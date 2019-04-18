@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <AppLoading></AppLoading>
     <v-navigation-drawer v-model="drawer" app :width="400" sm-and-down>
       <LayersTree></LayersTree>
       <!-- <featureInfo v-if="appStatus === 'info'"></featureInfo> -->
@@ -97,11 +98,13 @@ import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 import CountryFlag from "vue-country-flag";
 import LayersTree from "@/components/LayersTree.vue";
+import AppLoading from "@/components/AppLoading.vue";
 // import featureInfo from "@/components/featureInfo.vue";
 
 export default {
   name: "App",
   components: {
+    AppLoading,
     LayersTree,
     CountryFlag
   },
