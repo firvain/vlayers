@@ -81,7 +81,7 @@ const state = {
     203: {
       title: "Όρια Δήμων (Καλλικράτης)",
       cmp: "vl-layer-vector",
-      visible: true,
+      visible: false,
       renderMode: "image",
       source: {
         cmp: "vl-source-vector",
