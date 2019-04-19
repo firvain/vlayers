@@ -37,18 +37,10 @@
       wrap
       fill-height
     >
-      <v-flex pa-2 xs12 v-if="appStatus === 'draw'"
-        ><drawTool></drawTool
-      ></v-flex>
-      <v-flex pa-2 xs12 v-if="appStatus === 'measure'">
-        <measureTool :output="output"></measureTool>
+      <v-flex pa-2 xs12>
+        <component :is="component"></component>
       </v-flex>
-      <v-flex pa-2 xs12 v-if="appStatus === 'info'"
-        ><infoTool></infoTool
-      ></v-flex>
-      <v-flex pa-2 xs12 v-if="appStatus === 'print'">
-        <printTool></printTool>
-      </v-flex>
+
       <!-- <v-spacer></v-spacer> -->
     </v-layout>
   </v-container>
@@ -58,18 +50,12 @@ import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 import Vue2Filters from "vue2-filters";
 
-import infoTool from "@/components/infoTool";
-import drawTool from "@/components/drawTool";
-import measureTool from "@/components/measureTool";
-import printTool from "@/components/printTool";
-
 export default {
   name: "maptools",
-  components: {
-    drawTool,
-    measureTool,
-    infoTool,
-    printTool
+  data() {
+    return {
+      component: null
+    };
   },
   mixins: [Vue2Filters.mixin],
   props: {
@@ -81,10 +67,27 @@ export default {
   methods: {
     ...mapActions("app", ["updateAppStatus"]),
     ...mapActions("map", ["map", "updateDrawType"]),
+
     toolAction(value) {
       this.updateAppStatus(value);
     }
   },
-  watch: {}
+  watch: {
+    appStatus(newValue) {
+      switch (newValue) {
+        case "draw":
+          this.component = () => import("@/components/drawTool");
+          break;
+        case "measure":
+          this.component = () => import("@/components/measureTool");
+          break;
+        case "info":
+          this.component = () => import("@/components/infoTool");
+          break;
+        case "print":
+          this.component = () => import("@/components/printTool");
+      }
+    }
+  }
 };
 </script>

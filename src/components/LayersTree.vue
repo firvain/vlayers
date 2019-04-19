@@ -112,7 +112,7 @@ export default {
         this.updateVisibility({ id, value: !visible });
       }
       if (this.layers[id] != null) {
-        this.updateLoading(true);
+        if (!visible) this.updateLoading(true);
         this.updateVisibility({ id, value: !visible });
       }
     }

@@ -9,7 +9,7 @@ const state = {
     dim1: undefined,
     format: undefined,
   },
-  loading: true
+  loading: false
 };
 const getters = {
   appStatus: state => state.appStatus,
