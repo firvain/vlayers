@@ -27,7 +27,10 @@ export default {
       },
       info: {
         tooltip: "layer info",
-        multi: "multipe features"
+        multi: "overlaping features",
+        table: {
+          search: "search"
+        }
       },
       select: {
         tooltip: "select layer"

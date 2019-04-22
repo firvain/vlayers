@@ -2,18 +2,14 @@
   <v-container fluid pl-1 pr-1 pt-1 pb-0 ma-0>
     <v-layout align-center justify-start row wrap fill-height>
       <v-flex xs12>
-        <MapTools :output="measureOutput"></MapTools>
+        <v-fade-transition> <MapTools></MapTools></v-fade-transition>
       </v-flex>
-      <v-flex v-if="this.selectedFeatures.length !== 0" xs12 pa-2
-        ><featureInfo></featureInfo>
-      </v-flex>
-      <v-flex xs12>
+      <v-flex xs12 pt-1>
         <vl-map
           id="mymap"
           ref="map"
           :load-tiles-while-animating="true"
           :load-tiles-while-interacting="true"
-          class="mymap"
           :style="mapStyle"
           @mounted="onMapMounted"
         >
@@ -207,10 +203,11 @@
 </template>
 <script>
 import jsPDF from "jspdf";
-import MapTools from "@/components/MapTools";
-import featureInfo from "@/components/featureInfo.vue";
+
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
+
+import MapTools from "@/components/MapTools";
 import { fromLonLat } from "ol/proj";
 import { getArea, getLength } from "ol/sphere.js";
 import { Polygon } from "ol/geom.js";
@@ -222,15 +219,13 @@ import ZoomSlider from "ol/control/ZoomSlider";
 export default {
   name: "OpenLMAP",
   components: {
-    MapTools,
-    featureInfo
+    MapTools
   },
   data() {
     return {
       zoom: 10,
       rotation: 0,
       drawnFeatures: [],
-      measureOutput: "",
       selectedFeatures: []
     };
   },
@@ -245,6 +240,7 @@ export default {
       "multiInfo",
       "activeLayer"
     ]),
+
     mapStyle() {
       const footerClientHeight = document.getElementsByTagName("footer")[0]
         .clientHeight;
@@ -273,7 +269,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("map", ["updateSelectedFeature"]),
+    ...mapActions("map", ["updateSelectedFeature", "updateMeasureOutput"]),
     ...mapActions("app", ["updatePrint", "updateLoading"]),
     layerloaded() {
       this.updateLoading(false);
@@ -320,9 +316,9 @@ export default {
       console.log(evt);
       let geom = evt.feature.getGeometry();
       if (geom instanceof Polygon) {
-        this.measureOutput = this.formatArea(geom);
+        this.updateMeasureOutput(this.formatArea(geom));
       } else {
-        this.measureOutput = this.formatLength(geom);
+        this.updateMeasureOutput(this.formatLength(geom));
       }
     },
     filterF(feature, layer) {
@@ -352,7 +348,6 @@ export default {
         this.drawnFeatures = [];
         this.selectedFeatures = [];
         this.updateSelectedFeature({});
-        this.measureOutput = "";
       }
     },
     print(newValue) {
@@ -372,9 +367,9 @@ export default {
             height: undefined,
             dim0: undefined,
             dim1: undefined,
-            format: undefined,
-            loading: false
+            format: undefined
           });
+          this.updateLoading(false);
         });
         // Reset original map size
         map.setSize(size);

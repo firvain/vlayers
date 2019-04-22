@@ -1,41 +1,39 @@
 <template>
   <v-container fluid pa-0 ma-0>
-    <v-layout align-center justify-space-around row wrap fill-heigh>
-      <v-flex xs3 md2 lg1>
+    <v-layout align-center justify-space-around row wrap fill-height>
+      <v-flex xs3 md1>
         <v-select
           v-model="selectDim"
           :items="dims"
-          label="Standard"
+          label="Dimentions"
           solo
           dense
+          dark
+          flat
           hide-details
           return-object
         ></v-select>
       </v-flex>
 
-      <v-flex xs3 md2 lg1>
+      <v-flex xs3 md1>
         <v-select
           v-model="selectResolution"
           :items="resolutions"
-          label="Standard"
+          label="Resolutions"
           solo
           dense
+          dark
+          flat
           hide-details
           return-object
         ></v-select>
       </v-flex>
-      <v-flex xs3 md2 lg1 class="text-xs-center">
-        <v-btn
-          small
-          color="success"
-          @click="exportButton"
-          :loading="print.loading"
-          :disabled="print.loading"
-        >
+      <v-flex shrink class="text-xs-center text-md-left">
+        <v-btn small color="success" @click="exportButton">
           Print
         </v-btn>
       </v-flex>
-      <v-flex xs12 md2 lg1 class="text-xs-center">
+      <v-flex xs12 md1 class="text-xs-center text-md-left">
         <v-btn small color="error" @click="toolActionCancel()"
           >{{ $t("map.tools.cancel") }}
           <v-icon right small>mdi-cancel</v-icon>
@@ -51,6 +49,7 @@ import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 
 export default {
+  name: "MapToolsPrint",
   data() {
     return {
       selectDim: { text: "a4", value: [420, 297] },
@@ -73,8 +72,9 @@ export default {
     ...mapGetters("app", ["appStatus", "print"])
   },
   methods: {
-    ...mapActions("app", ["updateAppStatus", "updatePrint"]),
+    ...mapActions("app", ["updateAppStatus", "updatePrint", "updateLoading"]),
     exportButton() {
+      this.updateLoading(true);
       const width = Math.round(
         (this.selectDim.value[0] * this.selectResolution.value) / 25.4
       );
@@ -91,8 +91,7 @@ export default {
         width,
         dim0,
         dim1,
-        format,
-        loading: true
+        format
       });
     },
     toolActionCancel() {
@@ -101,3 +100,11 @@ export default {
   }
 };
 </script>
+<style scoped>
+.v-text-field--box .v-input__slot,
+.v-text-field--outline .v-input__slot {
+  min-height: inherit !important;
+  display: flex !important;
+  align-items: center !important;
+}
+</style>

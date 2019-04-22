@@ -1,15 +1,15 @@
 <template>
   <v-container fluid pa-0 ma-0>
-    <v-layout align-center justify-space-around row wrap fill-heigh>
-      <v-flex xs9 md4 lg3>
+    <v-layout align-center justify-center row wrap fill-height>
+      <v-flex shrink>
         <v-radio-group
           ref="measureTypeRadioPicker"
           row
           v-model="radioGroup"
           hide-details
           :label="$t('map.tools.selectFeature') | uppercase"
-          class="pa-1 ma-0"
           dark
+          height="48"
         >
           <v-radio
             v-for="item in radioGroupItems"
@@ -25,12 +25,12 @@
           </template> -->
         </v-radio-group>
       </v-flex>
-      <v-flex xs12 md4 lg1>
+      <v-flex shrink class="text-xs-center text-md-left">
         <v-chip label color="pink" text-color="white" v-model="result">
-          <v-icon left>label</v-icon>{{ output }}
+          <v-icon left>label</v-icon>{{ this.measureOutput }}
         </v-chip>
       </v-flex>
-      <v-flex xs12 md2 lg1 class="text-xs-center">
+      <v-flex xs12 md2 class="text-xs-center text-md-left">
         <v-btn small color="error" @click="toolActionCancel()"
           >{{ $t("map.tools.cancel") }}
           <v-icon right small>mdi-cancel</v-icon>
@@ -44,10 +44,7 @@
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 export default {
-  name: "measuretool",
-  props: {
-    output: String
-  },
+  name: "MapToolsMeasure",
   data() {
     return {
       radioGroupItems: [
@@ -66,7 +63,7 @@ export default {
   },
   computed: {
     ...mapGetters("app", ["appStatus"]),
-    ...mapGetters("map", ["drawType"]),
+    ...mapGetters("map", ["drawType", "measureOutput"]),
     radioGroup: {
       get: function() {
         if (this.drawType) {
@@ -80,26 +77,27 @@ export default {
       }
     },
     result() {
-      if (this.output) return true;
+      if (this.measureOutput) return true;
       return false;
     }
   },
   methods: {
     ...mapActions("app", ["updateAppStatus"]),
-    ...mapActions("map", ["updateDrawType"]),
+    ...mapActions("map", ["updateDrawType", "updateMeasureOutput"]),
     toolAction(value) {
       this.updateAppStatus(value);
     },
     toolActionCancel() {
       this.updateAppStatus("display");
       this.updateDrawType(undefined);
+      this.updateMeasureOutput("");
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-.result {
-  // line-height: 2 !important;
-  font-size: 100%;
+.v-input--selection-controls {
+  padding: 0;
+  margin: 0;
 }
 </style>

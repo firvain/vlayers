@@ -27,7 +27,10 @@ export default {
       },
       info: {
         tooltip: "слој информации",
-        multi: "многуброен функција"
+        multi: "преклопувачки карактеристики",
+        table: {
+          search: "пребарување"
+        }
       },
       select: {
         tooltip: "одберете слој"

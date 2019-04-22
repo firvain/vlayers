@@ -168,7 +168,8 @@ const getters = {
   selectedFeature: state => state.selectedFeature,
   multiInfo: state => state.multiInfo,
   activeTreeItem: state => state.activeTreeItem,
-  activeLayer: state => state.activeLayer
+  activeLayer: state => state.activeLayer,
+  measureOutput: state => state.measureOutput
 };
 const mutations = {
   setMapCenter(state, payload) {
@@ -194,6 +195,9 @@ const mutations = {
   },
   UPDATE_ACTIVE_LAYER(state, { value }) {
     state.activeLayer = value;
+  },
+  UPDATE_MEASURE_OUTPUT(state, payload) {
+    state.measureOutput = payload;
   }
 };
 const actions = {
@@ -234,6 +238,9 @@ const actions = {
   },
   updateActiveLayer({ commit }, payload) {
     commit("UPDATE_ACTIVE_LAYER", payload);
+  },
+  updateMeasureOutput({ commit }, payload) {
+    commit("UPDATE_MEASURE_OUTPUT", payload);
   }
 };
 

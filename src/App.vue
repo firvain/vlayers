@@ -7,8 +7,8 @@
     </v-navigation-drawer>
     <v-toolbar color="primary" dark fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <img src="@/assets/logo.png" width="60" height="60" alt="" />
       <v-toolbar-title> Terrarum</v-toolbar-title>
-
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-tooltip bottom>

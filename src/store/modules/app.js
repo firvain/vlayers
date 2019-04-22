@@ -7,9 +7,9 @@ const state = {
     height: undefined,
     dim0: undefined,
     dim1: undefined,
-    format: undefined,
+    format: undefined
   },
-  loading: false
+  loading: true
 };
 const getters = {
   appStatus: state => state.appStatus,

@@ -27,7 +27,10 @@ export default {
       },
       info: {
         tooltip: "πληροφορίες επιπέδου",
-        multi: "πολλαπλα στοχεια"
+        multi: "επικαλυπτομενα στοχεια",
+        table: {
+          search: "αναζητηση"
+        }
       },
       select: {
         tooltip: "επιλογη επιπεδου"
