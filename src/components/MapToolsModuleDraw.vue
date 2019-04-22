@@ -1,6 +1,6 @@
 <template>
   <v-container fluid pa-0 ma-0>
-    <v-layout align-center justify-space-around row wrap fill-height>
+    <v-layout align-center justify-center row wrap fill-height>
       <v-flex shrink>
         <v-radio-group
           ref="drawTypeRadioPicker"

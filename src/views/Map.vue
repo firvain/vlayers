@@ -2,6 +2,8 @@
   <OpenLMAP></OpenLMAP>
 </template>
 <script>
+import { mapActions } from "vuex";
+
 import OpenLMAP from "@/components/OpenLMAP.vue";
 
 export default {
@@ -11,6 +13,14 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    ...mapActions("app", ["updateLoading"])
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.updateLoading(true);
+    });
   }
 };
 </script>
