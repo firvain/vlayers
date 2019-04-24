@@ -1,5 +1,5 @@
 import { createStyle } from "vuelayers/lib/ol-ext";
-import { getArea } from "ol/sphere";
+// import { getArea } from "ol/sphere";
 import colormap from "colormap";
 // const min = 1e8; // the smallest area
 // const max = 2e13; // the biggest area
