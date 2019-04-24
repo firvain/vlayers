@@ -1,14 +1,14 @@
 <template>
   <v-app>
     <AppLoading></AppLoading>
-    <v-navigation-drawer v-model="drawer" app :width="400" sm-and-down>
+    <v-navigation-drawer v-model="drawer" app :width="400" stateless>
       <LayersTree></LayersTree>
       <!-- <featureInfo v-if="appStatus === 'info'"></featureInfo> -->
     </v-navigation-drawer>
     <v-toolbar color="primary" dark fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <img src="@/assets/logo.png" width="60" height="60" alt="" />
-      <v-toolbar-title> Terrarum</v-toolbar-title>
+      <v-toolbar-title class="hidden-sm-and-down">Terrarum</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-tooltip bottom>
@@ -118,7 +118,7 @@ export default {
         return this.sidebar;
       },
       set(value) {
-        this.updateSidebar(value);
+        this.UPDATE_SIDEBAR(value);
       }
     },
     currentLang() {
@@ -126,10 +126,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions("app", ["updateSidebar"]),
+    ...mapActions("app", ["UPDATE_SIDEBAR"]),
     country(v) {
       this.$i18n.set(v);
     }
   }
 };
 </script>
+<style>
+html {
+  overflow-y: hidden;
+}
+</style>

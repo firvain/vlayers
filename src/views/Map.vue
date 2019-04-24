@@ -15,11 +15,11 @@ export default {
     return {};
   },
   methods: {
-    ...mapActions("app", ["updateLoading"])
+    ...mapActions("app", ["UPDATE_LOADING"])
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.updateLoading(true);
+      vm.UPDATE_LOADING(true);
     });
   }
 };

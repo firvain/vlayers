@@ -1,7 +1,5 @@
 <template>
-  <v-flex xs12 pa-0>
-    <component :is="component"></component>
-  </v-flex>
+  <component :is="component"></component>
   <!-- <v-spacer></v-spacer> -->
 </template>
 <script>

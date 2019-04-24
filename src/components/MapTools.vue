@@ -1,9 +1,5 @@
 <template>
-  <v-container fluid class="grey darken-3" pa-0>
-    <v-layout align-center justify-start row wrap fill-height>
-      <component :is="component"></component>
-    </v-layout>
-  </v-container>
+  <component :is="component"></component>
 </template>
 <script>
 import { mapGetters } from "vuex";

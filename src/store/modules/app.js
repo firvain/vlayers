@@ -18,31 +18,31 @@ const getters = {
   loading: state => state.loading
 };
 const mutations = {
-  UPDATE_APP_STATUS(state, payload) {
+  SET_APP_STATUS(state, payload) {
     state.appStatus = payload;
   },
-  UPDATE_SIDEBAR(state, payload) {
+  SET_SIDEBAR(state, payload) {
     state.sidebar = payload;
   },
-  UPDATE_PRINT(state, payload) {
+  SET_PRINT(state, payload) {
     state.print = payload;
   },
-  UPDATE_LOADING(state, payload) {
+  SET_LOADING(state, payload) {
     state.loading = payload;
   }
 };
 const actions = {
-  updateAppStatus({ commit }, payload) {
-    commit("UPDATE_APP_STATUS", payload);
+  UPDATE_APP_STATUS({ commit }, payload) {
+    commit("SET_APP_STATUS", payload);
   },
-  updateSidebar({ commit }, payload) {
-    commit("UPDATE_SIDEBAR", payload);
+  UPDATE_SIDEBAR({ commit }, payload) {
+    commit("SET_SIDEBAR", payload);
   },
-  updatePrint({ commit }, payload) {
-    commit("UPDATE_PRINT", payload);
+  UPDATE_PRINT({ commit }, payload) {
+    commit("SET_PRINT", payload);
   },
-  updateLoading({ commit }, payload) {
-    commit("UPDATE_LOADING", payload);
+  UPDATE_LOADING({ commit }, payload) {
+    commit("SET_LOADING", payload);
   }
 };
 export default {

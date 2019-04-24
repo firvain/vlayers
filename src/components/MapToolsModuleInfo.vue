@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid pa-0>
-    <v-layout align-center justify-space-around row wrap fill-heigh>
-      <v-flex shrink>
+  <v-container fluid pa-0 ma-0 fill-height>
+    <v-layout align-center justify-center row wrap fill-height>
+      <v-flex xs6 md4>
         <v-select
           v-model="selectedLayer"
           :items="items"
@@ -12,10 +12,10 @@
           flat
           hide-details
           return-object
-          @change="updateActiveLayer"
+          @change="UPDATE_ACTIVE_LAYER"
         ></v-select>
       </v-flex>
-      <v-flex shrink>
+      <v-flex xs6 md4>
         <v-switch
           v-model="switch1"
           hide-details
@@ -24,7 +24,7 @@
           class="ma-0 pa-0"
         ></v-switch>
       </v-flex>
-      <v-flex xs12 md4 class="text-xs-center text-md-left">
+      <v-flex xs12 md2 class="text-xs-center">
         <v-btn small color="error" @click="toolActionCancel()"
           >{{ $t("map.tools.cancel") }}
           <v-icon right small>mdi-cancel</v-icon>
@@ -73,24 +73,24 @@ export default {
         return this.multiInfo;
       },
       set(v) {
-        this.updateMultinfo(v);
+        this.UPDATE_MULTI_INFO(v);
       }
     }
   },
   methods: {
     ...mapActions("app", [
-      "updateAppStatus",
-      "updateSidebar",
-      "updateMultinfo",
-      "updateActiveLayer"
+      "UPDATE_APP_STATUS",
+      "UPDATE_SIDEBAR",
+      "UPDATE_MULTI_INFO",
+      "UPDATE_ACTIVE_LAYER"
     ]),
-    ...mapActions("map", ["updateMultinfo", "updateActiveLayer"]),
+    ...mapActions("map", ["UPDATE_MULTI_INFO", "UPDATE_ACTIVE_LAYER"]),
     toolActionCancel() {
-      this.updateAppStatus("display");
+      this.UPDATE_APP_STATUS("display");
     }
   },
   mounted() {
-    // this.updateSidebar(true);
+    // this.UPDATE_SIDEBAR(true);
   }
 };
 </script>

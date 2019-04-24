@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid pa-0 ma-0>
-    <v-layout align-center justify-space-around row wrap fill-height>
-      <v-flex xs3 md1>
+  <v-container fluid pa-0 ma-0 fill-height>
+    <v-layout align-center justify-start row wrap fill-height>
+      <v-flex xs6 md2>
         <v-select
           v-model="selectDim"
           :items="dims"
@@ -15,7 +15,7 @@
         ></v-select>
       </v-flex>
 
-      <v-flex xs3 md1>
+      <v-flex xs6 md2>
         <v-select
           v-model="selectResolution"
           :items="resolutions"
@@ -28,18 +28,21 @@
           return-object
         ></v-select>
       </v-flex>
-      <v-flex shrink class="text-xs-center text-md-left">
-        <v-btn small color="success" @click="exportButton">
-          Print
-        </v-btn>
+      <v-flex xs12 md3>
+        <v-layout row align-center justify-center>
+          <v-flex xs6 class="text-xs-center">
+            <v-btn small color="success" @click="exportButton">
+              Print
+            </v-btn>
+          </v-flex>
+          <v-flex xs6 class="text-xs-center">
+            <v-btn small color="error" @click="toolActionCancel()"
+              >{{ $t("map.tools.cancel") }}
+              <v-icon right small>mdi-cancel</v-icon>
+            </v-btn>
+          </v-flex>
+        </v-layout>
       </v-flex>
-      <v-flex xs12 md1 class="text-xs-center text-md-left">
-        <v-btn small color="error" @click="toolActionCancel()"
-          >{{ $t("map.tools.cancel") }}
-          <v-icon right small>mdi-cancel</v-icon>
-        </v-btn>
-      </v-flex>
-      <v-spacer></v-spacer>
     </v-layout>
   </v-container>
 </template>
@@ -72,9 +75,13 @@ export default {
     ...mapGetters("app", ["appStatus", "print"])
   },
   methods: {
-    ...mapActions("app", ["updateAppStatus", "updatePrint", "updateLoading"]),
+    ...mapActions("app", [
+      "UPDATE_APP_STATUS",
+      "UPDATE_PRINT",
+      "UPDATE_LOADING"
+    ]),
     exportButton() {
-      this.updateLoading(true);
+      this.UPDATE_LOADING(true);
       const width = Math.round(
         (this.selectDim.value[0] * this.selectResolution.value) / 25.4
       );
@@ -85,7 +92,7 @@ export default {
       const dim1 = this.selectDim.value[1];
       const format = this.selectDim.text;
 
-      this.updatePrint({
+      this.UPDATE_PRINT({
         value: true,
         height,
         width,
@@ -95,7 +102,7 @@ export default {
       });
     },
     toolActionCancel() {
-      this.updateAppStatus("display");
+      this.UPDATE_APP_STATUS("display");
     }
   }
 };

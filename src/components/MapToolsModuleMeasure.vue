@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid pa-0 ma-0>
+  <v-container fluid pa-1 ma-0>
     <v-layout align-center justify-center row wrap fill-height>
       <v-flex shrink>
         <v-radio-group
@@ -9,7 +9,6 @@
           hide-details
           :label="$t('map.tools.selectFeature') | uppercase"
           dark
-          height="48"
         >
           <v-radio
             v-for="item in radioGroupItems"
@@ -69,11 +68,11 @@ export default {
         if (this.drawType) {
           return this.drawType;
         }
-        this.updateDrawType("LineString");
+        this.UPDATE_DRAW_TYPE("LineString");
         return "LineString";
       },
       set: function(newValue) {
-        this.updateDrawType(newValue);
+        this.UPDATE_DRAW_TYPE(newValue);
       }
     },
     result() {
@@ -82,15 +81,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions("app", ["updateAppStatus"]),
-    ...mapActions("map", ["updateDrawType", "updateMeasureOutput"]),
+    ...mapActions("app", ["UPDATE_APP_STATUS"]),
+    ...mapActions("map", ["UPDATE_DRAW_TYPE", "UPDATE_MEASURE_OUTPUT"]),
     toolAction(value) {
-      this.updateAppStatus(value);
+      this.UPDATE_APP_STATUS(value);
     },
     toolActionCancel() {
-      this.updateAppStatus("display");
-      this.updateDrawType(undefined);
-      this.updateMeasureOutput("");
+      this.UPDATE_APP_STATUS("display");
+      this.UPDATE_DRAW_TYPE(undefined);
+      this.UPDATE_MEASURE_OUTPUT("");
     }
   }
 };

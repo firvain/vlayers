@@ -25,21 +25,6 @@ const state = {
   },
   layersList: [200, 201, 202],
   layers: {
-    // Tile layer with WMS source
-    // 203: {
-    //   title: "NATURA 2220",
-    //   cmp: "vl-layer-tile",
-    //   visible: true,
-    //   source: {
-    //     cmp: "vl-source-wms",
-    //     url:
-    //       "http://geodata.gov.gr/geoserver/ows?service=WMS&request=GetMap&version=1.3.0" +
-    //       "&WIDTH=256&HEIGHT=256&format=image/png&srs=EPSG:4326&bbox=32.573282,16.944492,42.724649,30.83121",
-    //     layers: "geodata.gov.gr:262a95fb-2d88-4df8-980f-5ed4de44245b",
-    //     extParams: { TILED: true },
-    //     serverType: "geoserver"
-    //   }
-    // },
     200: {
       title: "Bird Directive Sites",
       cmp: "vl-layer-vector",
@@ -47,7 +32,6 @@ const state = {
       renderMode: "image",
       source: {
         cmp: "vl-source-vector",
-        projection: "EPSG:4326",
         features: [],
         url:
           "https://bio.discomap.eea.europa.eu/arcgis/rest/services/ProtectedSites/EUNIS_Website_Dyna_WM/MapServer/7/query?where=COUNTRY_CODE+%3D+%27GR%27&outFields=*&f=geojson"
@@ -66,7 +50,6 @@ const state = {
       renderMode: "image",
       source: {
         cmp: "vl-source-vector",
-        projection: "EPSG:4326",
         features: [],
         url:
           "https://bio.discomap.eea.europa.eu/arcgis/rest/services/ProtectedSites/EUNIS_Website_Dyna_WM/MapServer/3/query?where=COUNTRY_CODE+%3D+%27GR%27&outFields=*&f=geojson"
@@ -110,23 +93,6 @@ const state = {
         }
       ]
     }
-    // 202: {
-    //   title: "Countries",
-    //   cmp: "vl-layer-vector",
-    //   visible: false,
-    //   source: {
-    //     cmp: "vl-source-vector",
-    //     projection: "EPSG:4326",
-    //     url:
-    //       "https://openlayers.org/en/latest/examples/data/geojson/countries.geojson"
-    //   },
-    //   style: [
-    //     {
-    //       cmp: "vl-style-func",
-    //       factory: defaultStyle
-    //     }
-    //   ]
-    // }
   },
   utilityLayersList: [1000],
   utilityLayers: {
@@ -147,7 +113,6 @@ const state = {
       ]
     }
   },
-  mapCenter: [21.78896, 40.30069],
   drawType: undefined,
   measureOutput: "",
   selectedFeature: [],
@@ -157,7 +122,6 @@ const state = {
 };
 
 const getters = {
-  mapCenter: state => state.mapCenter,
   baseLayersList: state => state.baseLayersList,
   baseLayers: state => state.baseLayers,
   layersList: state => state.layersList,
@@ -172,75 +136,66 @@ const getters = {
   measureOutput: state => state.measureOutput
 };
 const mutations = {
-  setMapCenter(state, payload) {
-    state.mapCenter = payload;
-  },
-  UPDATE_LAYER_VISIBILITY(state, { item, value }) {
+  SET_LAYER_VISIBILITY(state, { item, value }) {
     Object.assign(item, { visible: value });
   },
-  UPDATE_MAP_CENTER(state, payload) {
-    state.mapCenter = payload;
-  },
-  UPDATE_MULTI_INFO(state, payload) {
+  SET_MULTI_INFO(state, payload) {
     state.multiInfo = payload;
   },
-  UPDATE_DRAW_TYPE(state, payload) {
+  SET_DRAW_TYPE(state, payload) {
     state.drawType = payload;
   },
-  UPDATE_SELECTED_FEATURE(state, payload) {
+  SET_SELECTED_FEATURE(state, payload) {
     state.selectedFeature = payload;
   },
-  UPDATE_ACTIVE_TREE_ITEM(state, payload) {
+  SET_ACTIVE_TREE_ITEM(state, payload) {
     state.activeTreeItem = payload;
   },
-  UPDATE_ACTIVE_LAYER(state, { value }) {
+  SET_ACTIVE_LAYER(state, { value }) {
     state.activeLayer = value;
   },
-  UPDATE_MEASURE_OUTPUT(state, payload) {
+  SET_MEASURE_OUTPUT(state, payload) {
     state.measureOutput = payload;
   }
 };
 const actions = {
-  updateMapCenter({ commit }, payload) {
-    commit("UPDATE_MAP_CENTER", payload);
-  },
-  updateVisibility({ commit }, { id, value }) {
+  UPDATE_VISIBILITY({ commit }, { id, value }) {
     let item;
     if (state.baseLayersList.includes(parseInt(id))) {
       /* first find and change Clicked Base Layer Visibility */
       item = state.baseLayers[id];
-      commit("UPDATE_LAYER_VISIBILITY", { item, value });
+      commit("SET_LAYER_VISIBILITY", { item, value });
       /* then find and change other Base Layers Visibility*/
       Object.keys(state.baseLayers).forEach(i => {
         if (i !== id) {
           item = state.baseLayers[i];
           let value = false; //! mutation is BAD!!!
-          commit("UPDATE_LAYER_VISIBILITY", { item, value });
+          commit("SET_LAYER_VISIBILITY", { item, value });
         }
       });
       /* handle other layers */
     } else if (!state.baseLayersList.includes(parseInt(id))) {
       item = state.layers[id];
-      commit("UPDATE_LAYER_VISIBILITY", { item, value });
+      commit("SET_LAYER_VISIBILITY", { item, value });
     }
   },
-  updateDrawType({ commit }, payload) {
-    commit("UPDATE_DRAW_TYPE", payload);
+  UPDATE_DRAW_TYPE({ commit }, payload) {
+    commit("SET_DRAW_TYPE", payload);
   },
-  updateSelectedFeature({ commit }, payload) {
-    commit("UPDATE_SELECTED_FEATURE", payload);
+  UPDATE_SELECTED_FEATURE({ commit }, payload) {
+    commit("SET_SELECTED_FEATURE", payload);
   },
-  updateActiveTreeItem({ commit }, payload) {
-    commit("UPDATE_ACTIVE_TREE_ITEM", payload);
+  UPDATE_ACTIVE_TREE_ITEM({ commit }, payload) {
+    commit("SET_ACTIVE_TREE_ITEM", payload);
   },
-  updateMultinfo({ commit }, payload) {
-    commit("UPDATE_MULTI_INFO", payload);
+  UPDATE_MULTI_INFO({ commit }, payload) {
+    commit("SET_MULTI_INFO", payload);
   },
-  updateActiveLayer({ commit }, payload) {
-    commit("UPDATE_ACTIVE_LAYER", payload);
+  UPDATE_ACTIVE_LAYER({ commit }, payload) {
+    commit("SET_ACTIVE_LAYER", payload);
   },
-  updateMeasureOutput({ commit }, payload) {
-    commit("UPDATE_MEASURE_OUTPUT", payload);
+  UPDATE_MEASURE_OUTPUT({ commit }, payload) {
+    commit("SET_MEASURE_OUTPUT", payload);
   }
 };
 

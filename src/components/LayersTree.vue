@@ -75,7 +75,7 @@ export default {
         return this.activeTreeItem;
       },
       set: function(v) {
-        this.updateActiveTreeItem(v);
+        this.UPDATE_ACTIVE_TREE_ITEM(v);
       }
     },
     mapLayers() {
@@ -105,15 +105,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions("map", ["updateVisibility", "updateActiveTreeItem"]),
-    ...mapActions("app", ["updateLoading"]),
+    ...mapActions("map", ["UPDATE_ACTIVE_TREE_ITEM", "UPDATE_VISIBILITY"]),
+    ...mapActions("app", ["UPDATE_LOADING"]),
     changeVisibility({ id, visible }) {
       if (this.baseLayers[id] != null) {
-        this.updateVisibility({ id, value: !visible });
+        this.UPDATE_VISIBILITY({ id, value: !visible });
       }
       if (this.layers[id] != null) {
-        if (!visible) this.updateLoading(true);
-        this.updateVisibility({ id, value: !visible });
+        if (!visible) this.UPDATE_LOADING(true);
+        this.UPDATE_VISIBILITY({ id, value: !visible });
       }
     }
   },

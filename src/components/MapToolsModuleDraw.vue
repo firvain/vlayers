@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid pa-0 ma-0>
+  <v-container fluid pa-1 ma-0 fill-height>
     <v-layout align-center justify-center row wrap fill-height>
       <v-flex shrink>
         <v-radio-group
@@ -9,7 +9,6 @@
           hide-details
           :label="$t('map.tools.selectFeature') | uppercase"
           dark
-          height="48"
         >
           <v-radio
             v-for="item in radioGroupItems"
@@ -63,20 +62,20 @@ export default {
         if (this.drawType) {
           return this.drawType;
         }
-        this.updateDrawType("Point");
+        this.UPDATE_DRAW_TYPE("Point");
         return "Point";
       },
       set: function(newValue) {
-        this.updateDrawType(newValue);
+        this.UPDATE_DRAW_TYPE(newValue);
       }
     }
   },
   methods: {
-    ...mapActions("app", ["updateAppStatus"]),
-    ...mapActions("map", ["updateDrawType"]),
+    ...mapActions("app", ["UPDATE_APP_STATUS"]),
+    ...mapActions("map", ["UPDATE_DRAW_TYPE"]),
     toolActionCancel() {
-      this.updateAppStatus("display");
-      this.updateDrawType(undefined);
+      this.UPDATE_APP_STATUS("display");
+      this.UPDATE_DRAW_TYPE(undefined);
     }
   },
   watch: {}
