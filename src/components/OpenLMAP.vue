@@ -22,8 +22,8 @@
   </v-container>
 </template>
 <script>
-import MapTools from "@/components/MapTools";
-import VueLayersMap from "@/components/VueLayersMap";
+const MapTools = () => import("@/components/MapTools");
+const VueLayersMap = () => import("@/components/VueLayersMap");
 
 export default {
   name: "OpenLMAP",

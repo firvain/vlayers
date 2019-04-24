@@ -97,7 +97,7 @@
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 import CountryFlag from "vue-country-flag";
-import LayersTree from "@/components/LayersTree.vue";
+const LayersTree = () => import("@/components/LayersTree.vue");
 import AppLoading from "@/components/AppLoading.vue";
 // import featureInfo from "@/components/featureInfo.vue";
 
